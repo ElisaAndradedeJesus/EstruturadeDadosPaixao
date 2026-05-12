@@ -11,9 +11,6 @@ DynVec *dvCreate();
 //Criar Vetor de um arquivo externo
 DynVec *dvCreateFromFile(const char *filename);
 
-//Função pra almentar o tamanho do espaço disponível para o vetor
-static void reallocate(DynVec *dv);
-
 //Função para inserir Um valor no vetor
 void dvInsert(DynVec *dv,float x);
 
