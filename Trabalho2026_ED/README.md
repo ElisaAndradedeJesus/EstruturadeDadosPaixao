@@ -5,29 +5,27 @@ Este projeto implementa um sistema de cadastro, consulta, inserção, atualizaç
 ---
 
 ## Estrutura do Repositório
-Falta fazer o Makefile E decidir o futuro do run.sh
 
 ```
 ├── BD                # Pasta Base de dados no formato CSV
-    ├── app.py
-    ├── partidas_completo.csv
-    ├── partidas_parcial.csv
-    ├── partidas_vazio.csv
-    └── times.csv
+│   ├── app.py
+│   ├── partidas_completo.csv
+│   ├── partidas_parcial.csv
+│   ├── partidas_vazio.csv
+│   └── times.csv
 ├── include           # Pasta com arquivos .h
-    ├── bdpartidas.h 
-    ├── bdtimes.h
-    ├── partida.h
-    └── time.h
+│   ├── bdpartidas.h 
+│   ├── bdtimes.h
+│   ├── partida.h
+│   └── time.h
 ├── src               # Pasta com arquivos .c
-    ├── bdpartidas.c
-    ├── bdtimes.c
-    ├── partida.c
-    └── time.c
-├── Makefile          # Automação de compilação e execução(N existe)
+│   ├── bdpartidas.c
+│   ├── bdtimes.c
+│   ├── partida.c
+│   └── time.c
+├── Makefile          # Automação de compilação e execução
 ├── main.c            # Ponto de entrada do programa
 ├── README.md         # Auto explicativo né, pelo amor de Deus!
-├── run.sh            # Arquivo de automação de execução temporário
 └── tp1.pdf           # Documento guia. Especificações do trabalho.
 ```
 
@@ -96,27 +94,32 @@ Este TAD permite o gerenciamento flexível da coleção de pacientes, possibilit
 ---
 
 ## Instruções para Execução
+Caso esteja seguindo o passo a passo do repositório **EstruturadeDadosPaixao**:
+```bash
+  cd Trabalho2026_ED
+```
+Se não:
+
+**Clone o repositório:**
+ ```bash
+   git clone https://github.com/exemplo.git
+    cd aerquivoTrabalho
+   ```
+
 
 1. **Pré-requisitos:**
  - Um compilador de C.  
- - Certifique-se de ter o arquivo `bd_paciente.csv` no mesmo diretório do código.  
-
 ---
 
 2. **Compilar**  
    ```bash
    make
    ```
-   Para versão debug:
-   ```bash
-   make main-debug
-   ```
-
 ---
 
 3. **Executar o programa**  
    ```bash
-   ./main
+   make run
    ```
 
 ---
