@@ -35,20 +35,21 @@ Este projeto implementa um sistema de cadastro, consulta, inserção, atualizaç
 
 ---
 
-- **bd_paciente.csv:** Arquivo de dados que deve estar no mesmo diretório. Ele deve conter os registros dos pacientes seguindo o formato: `id,cpf,nome,idade,data_cadastro`
-
 - **Makefile:**  
-  - `make`: compila tudo e gera `./main`  
-  - `make main-debug`: compila sem otimização para facilitar debug  
+  - `make`: compila tudo;
+  - `make run`: roda o programa;
   - `make clean`: remove objetos e executáveis  
 
-- **main.c:** Carrega o CSV, inicializa o banco, chama `ui_exibir_menu()` e, ao sair, salva novamente.
+- **main.c:** Ponto de entrada do programa. Carrega a interface de usuário.
 
-- **bd.c / bd.h**  
-  Implementam o TAD `BDPaciente` (lista ligada):  
-  - criação/destruição do banco  
-  - inserção, busca (por nome, CPF ou ID), atualização e remoção  
-  - carregamento e escrita em arquivo CSV
+- **time.c / time.h :** Implementam o TAD `Time`. 
+
+- **partida.c / partida.h :** Implementam o TAD `Partida`.
+
+- **bdtime.c / bdtime.h** 
+  Implementam o TAD `BDTime`:
+  - Acessa o Banco de Dados a carrega os times registrados no arquivo "times.csv"
+
  
 - **paciente.c / paciente.h**  
   Definem o TAD `Paciente` e funções:  
@@ -67,20 +68,24 @@ Este projeto implementa um sistema de cadastro, consulta, inserção, atualizaç
 
 ## TADs utilizados: (TEM QUE MUDAR TUDO)
 
-### 1. Paciente
-O projeto utiliza o TAD **Paciente**, definido como uma `struct` em `paciente.c`, que possui os seguintes campos:
+### 1. Time
+O projeto utiliza o TAD **Paciente**, definido como uma `struct` em `time.c`, que possui os seguintes campos:
 
-- `id` (int): Número identificador do paciente.
-- `cpf` (char[20]): CPF do paciente.
-- `nome` (char[100]): Nome completo do paciente.
-- `idade` (int): Idade do paciente.
-- `data_cadastro` (char[15]): Data de cadastro do paciente.
+- `id` (int): Número identificador do time.
+- `nome` (char[50]): Nome do time.
+
+- `vitorias` (int): Quantas vitórias tiveram.
+- `empates` (int): Quantas vezes empataram.
+- `derrotas` (int): Quantos vazes perderam.
+
+- `golsMarcados` (int): Quantos gols marcaram.
+- `golsSofridos` (int): Quantos gols sofreram.
 
 Este TAD é a base para manipulação dos dados, permitindo que as operações de consulta e impressão sejam realizadas de forma consistente e organizada.
 
-### 2. BDPaciente (lista ligada)
+### 2. BDTimes (lista ligada)
 
-O TAD **BDPaciente**, definido em `bd.h`, representa uma estrutura dinâmica baseada em lista ligada que armazena múltiplos registros de pacientes. Ela é composta por nós (`struct No`), onde cada nó guarda um `Paciente` e aponta para o próximo na sequência.
+O TAD **BDTimes**, definido em `bdtimes.h`, representa uma estrutura dinâmica baseada em lista ligada que armazena múltiplos registros de pacientes. Ela é composta por nós (`struct No`), onde cada nó guarda um `Paciente` e aponta para o próximo na sequência.
 
 - `No`:  
   - `paciente` (Paciente): Estrutura contendo os dados do paciente.  
@@ -103,7 +108,7 @@ Se não:
 **Clone o repositório:**
  ```bash
    git clone https://github.com/exemplo.git
-    cd aerquivoTrabalho
+    cd exemplo
    ```
 
 
