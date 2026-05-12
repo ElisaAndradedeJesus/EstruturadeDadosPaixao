@@ -112,24 +112,21 @@ Se não:
    ```
 
 
-1. **Pré-requisitos:**
- - Um compilador de C.  
----
 
-2. **Compilar**  
+1. **Compilar**  
    ```bash
    make
    ```
 ---
 
-3. **Executar o programa**  
+2. **Executar o programa**  
    ```bash
    make run
    ```
 
 ---
 
-4. **Limpeza dos arquivos objeto**  
+3. **Limpeza dos arquivos objeto**  
    ```bash
    make clean
    ```
