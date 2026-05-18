@@ -18,7 +18,7 @@ struct team{
     int golsSofridos;
 };
 
-Team* criarTime(int id, const char* nome){
+Team* criarTeam(int id, const char* nome){
     Team* t = (Team*)malloc(sizeof(Team));
     if (t == NULL) {
         fprintf(stderr, "Erro ao alocar memória para o time.\n");
@@ -77,7 +77,7 @@ int getGolsSofridos(Team* t) {
 }
 
 // Função para liberar memória alocada para o time
-void liberarTime(Team* t) {
+void liberarTeam(Team* t) {
     if (t != NULL) {
         free(t);
     }

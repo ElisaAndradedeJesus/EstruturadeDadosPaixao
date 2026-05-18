@@ -1,17 +1,17 @@
-#ifndef TIME_H
-#define TIME_H
+#ifndef TEAM_H
+#define TEAM_H
 
 #include <assert.h>
 
 typedef struct team Team;
 
-Team* criarTime(int id, const char* nome);
+Team* criarTeam(int id, const char* nome);
 
 // ===================================================================
 // FUNÇÕES GET PARA ACESSAR OS ATRIBUTOS DO TIME
 
 // Função para acessar Id do time
-int getIdTime(Team* t);
+int getIdTeam(Team* t);
 
 // Função para acessar nome do time
 char* getNome(Team* t);
@@ -34,6 +34,6 @@ int getGolsSofridos(Team* t);
 // ===================================================================
 
 // Função para liberar memória alocada para o time
-void liberarTime(Team* t);
+void liberarTeam(Team* t);
 
-#endif // TIME_H
+#endif // TEAM_H

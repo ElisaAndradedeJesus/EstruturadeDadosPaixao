@@ -5,7 +5,7 @@
 
 #include "team.h"
 
-typedef struct bdteam BDTeams;
+typedef struct bdteams BDTeams;
 
 // cria Vetor de times
 BDTeams* criarBDTeams();
