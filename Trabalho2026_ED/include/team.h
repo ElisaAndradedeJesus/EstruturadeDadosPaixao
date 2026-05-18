@@ -3,37 +3,37 @@
 
 #include <assert.h>
 
-typedef struct team Time;
+typedef struct team Team;
 
-Time* criarTime(int id, const char* nome);
+Team* criarTime(int id, const char* nome);
 
 // ===================================================================
 // FUNÇÕES GET PARA ACESSAR OS ATRIBUTOS DO TIME
 
 // Função para acessar Id do time
-int getIdTime(Time* t);
+int getIdTime(Team* t);
 
 // Função para acessar nome do time
-char* getNome(Time* t);
+char* getNome(Team* t);
 
 // Função para acessar vitorias do time
-int getVitorias(Time* t);
+int getVitorias(Team* t);
 
 // Função para acessar empates do time
-int getEmpates(Time* t);
+int getEmpates(Team* t);
 
 // Função para acessar derrotas do time
-int getDerrotas(Time* t);
+int getDerrotas(Team* t);
 
 // Função para acessar gols marcados do time
-int getGolsMarcados(Time* t);
+int getGolsMarcados(Team* t);
 
 // Função para acessar gols sofridos do time
-int getGolsSofridos(Time* t);
+int getGolsSofridos(Team* t);
 
 // ===================================================================
 
 // Função para liberar memória alocada para o time
-void liberarTime(Time* t);
+void liberarTime(Team* t);
 
 #endif // TIME_H

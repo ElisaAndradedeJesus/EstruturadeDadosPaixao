@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stddef.h>
 
-#include "time.h"
+#include "team.h"
 
 struct team{
     int id;
@@ -18,8 +18,8 @@ struct team{
     int golsSofridos;
 };
 
-Time* criarTime(int id, const char* nome){
-    Time* t = (Time*)malloc(sizeof(Time));
+Team* criarTime(int id, const char* nome){
+    Team* t = (Team*)malloc(sizeof(Team));
     if (t == NULL) {
         fprintf(stderr, "Erro ao alocar memória para o time.\n");
         exit(EXIT_FAILURE);
@@ -35,49 +35,49 @@ Time* criarTime(int id, const char* nome){
 }
 
 // Função para acessar Id do time
-int getIdTime(Time* t) {
+int getIdTeam(Team* t) {
     assert(t != NULL);
     return t->id;
 }
 
 // Função para acessar nome do time
-char* getNome(Time* t) {
+char* getNome(Team* t) {
     assert(t != NULL);
     return t->nome;
 }
 
 // Função para acessar vitorias do time
-int getVitorias(Time* t) {
+int getVitorias(Team* t) {
     assert(t != NULL);
     return t->vitorias;
 }
 
-// Funçãp para acessar empates do time
-int getEmpates(Time* t) {
+// Função para acessar empates do time
+int getEmpates(Team* t) {
     assert(t != NULL);
     return t->empates;
 }
 
 // Função para acessar derrotas do time
-int getDerrotas(Time* t) {
+int getDerrotas(Team* t) {
     assert(t != NULL);
     return t->derrotas;
 }
 
 // Função para acessar gols marcados do time
-int getGolsMarcados(Time* t) {
+int getGolsMarcados(Team* t) {
     assert(t != NULL);
     return t->golsMarcados;
 }
 
 // Função para acessar gols sofridos do time
-int getGolsSofridos(Time* t) {
+int getGolsSofridos(Team* t) {
     assert(t != NULL);
     return t->golsSofridos;
 }
 
 // Função para liberar memória alocada para o time
-void liberarTime(Time* t) {
+void liberarTime(Team* t) {
     if (t != NULL) {
         free(t);
     }
