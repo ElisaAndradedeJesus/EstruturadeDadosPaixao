@@ -36,44 +36,96 @@ Team* criarTeam(int id, const char* nome){
 
 // Função para acessar Id do time
 int getIdTeam(Team* t) {
-    assert(t != NULL);
-    return t->id;
+    if (t!= NULL) {
+        return t->id;
+    }
+    return -1;  // Valor inválido se o time for NULL
 }
 
 // Função para acessar nome do time
 char* getNome(Team* t) {
-    assert(t != NULL);
-    return t->nome;
+    if(t != NULL) {
+        return t->nome;
+    }
+    return NULL;
 }
 
 // Função para acessar vitorias do time
 int getVitorias(Team* t) {
-    assert(t != NULL);
-    return t->vitorias;
+    if (t != NULL) {
+        return t->vitorias;
+    }
+    return -1;  // Valor inválido se o time for NULL
 }
 
 // Função para acessar empates do time
 int getEmpates(Team* t) {
-    assert(t != NULL);
-    return t->empates;
+    if (t != NULL) {
+        return t->empates;
+    }
+    return -1;  // Valor inválido se o time for NULL
 }
 
 // Função para acessar derrotas do time
 int getDerrotas(Team* t) {
-    assert(t != NULL);
-    return t->derrotas;
+    if (t != NULL) {
+        return t->derrotas;
+    }
+    return -1;  // Valor inválido se o time for NULL
 }
 
 // Função para acessar gols marcados do time
 int getGolsMarcados(Team* t) {
-    assert(t != NULL);
-    return t->golsMarcados;
+    if(t != NULL) {
+        return t->golsMarcados;
+    }
+    return -1;  // Valor inválido se o time for NULL
 }
 
 // Função para acessar gols sofridos do time
 int getGolsSofridos(Team* t) {
-    assert(t != NULL);
-    return t->golsSofridos;
+    if(t != NULL) {
+        return t->golsSofridos;
+    }
+    return -1;  // Valor inválido se o time for NULL
+}
+
+void incrementarVitorias(Team* t) {
+    if (t != NULL) {
+        t->vitorias++;
+    } else {
+        printf("Erro: Time é NULL. Não é possível incrementar vitórias.\n");
+    }
+}
+void incrementarEmpates(Team* t) {
+    if (t != NULL) {
+        t->empates++;
+    } else {
+        printf("Erro: Time é NULL. Não é possível incrementar empates.\n");
+    }
+}
+
+void incrementarDerrotas(Team* t) {
+    if (t != NULL) {
+        t->derrotas++;
+    } else {
+        printf("Erro: Time é NULL. Não é possível incrementar derrotas.\n");
+    }
+}
+
+void incrementarGolsMarcados(Team* t, int gols) {
+    if (t != NULL) {
+        t->golsMarcados += gols;
+    } else {
+        printf("Erro: Time é NULL. Não é possível incrementar gols marcados.\n");
+    }
+}
+void incrementarGolsSofridos(Team* t, int gols) {
+    if (t != NULL) {
+        t->golsSofridos += gols;
+    } else {
+        printf("Erro: Time é NULL. Não é possível incrementar gols sofridos.\n");
+    }
 }
 
 // Função para liberar memória alocada para o time

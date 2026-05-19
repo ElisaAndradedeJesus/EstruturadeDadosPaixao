@@ -4,7 +4,11 @@ CFLAGS = -Wall -Wextra -I include
 SRC = main.c src/*.c
 OUT = programa
 
-all:
+.PHONY: all compile clean attach detach dump
+
+all: clean compile run
+
+compile:
 	$(CC) $(CFLAGS) $(SRC) -o $(OUT)
 
 run:

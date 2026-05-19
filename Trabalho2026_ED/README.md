@@ -36,9 +36,10 @@ Este projeto implementa um sistema de cadastro, consulta, inserção, atualizaç
 ---
 
 - **Makefile:**  
-  - `make`: compila tudo;
+  - `make`: Executa: `clean compile run` nesta sequência;
   - `make run`: roda o programa;
-  - `make clean`: remove objetos e executáveis  
+  - `make clean`: remove objetos e executáveis  ;
+  - `make compile`: compila oprograma em umarquivo .o;
 
 - **main.c:** Ponto de entrada do programa. Carrega a interface de usuário.
 

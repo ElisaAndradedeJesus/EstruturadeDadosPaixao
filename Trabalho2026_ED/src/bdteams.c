@@ -66,7 +66,7 @@ BDTeams* criarBDTeamsDeArquivo(const char* nomeArquivo) {
     int id;
     char nomeTime[50];
     while (fscanf(arquivo, " %d,%49[^\n]", &id, nomeTime) == 2) {
-        Team* t = criarTime(id, nomeTime);
+        Team* t = criarTeam(id, nomeTime);
         if (t == NULL) {
             liberarBDTeams(bd);
             fclose(arquivo);
@@ -95,11 +95,24 @@ BDTeams* criarBDTeamsDeArquivo(const char* nomeArquivo) {
     return bd;
 }
 
+// Função para aber o tamanho do banco de dados de times
+int getSizeofBDTeams(BDTeams* bd) {
+    assert(bd != NULL);
+    return bd->nElementos;
+}
+
+// Função para acessar um time específico do banco de dados
+Team* getTeam(BDTeams* bd, int index) {
+    assert(bd != NULL);
+    assert(index >= 0 && index < bd->nElementos);
+    return bd->teams[index];
+}
+
 // Função para liberar memória alocada para o banco de dados de times
 void liberarBDTeams(BDTeams* bd) {
     if (bd != NULL) {
         for (int i = 0; i < bd->nElementos; i++) {
-            liberarTime(bd->teams[i]);
+            liberarTeam(bd->teams[i]);
         }
         free(bd->teams);
         free(bd);

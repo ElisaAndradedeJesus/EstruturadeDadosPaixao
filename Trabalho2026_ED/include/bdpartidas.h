@@ -16,6 +16,12 @@ int adicionarPartida(BDPartidas* bd, Partida* partida);
 //cria Vetor de um arquivo externo
 BDPartidas* criarBDPartidasDeArquivo(const char* nomeArquivo);
 
+// Função para saber o tamanho do banco de dados de partidas
+int getSizeofBDPartidas(BDPartidas* bd);
+
+// Função para acessar uma partida específica do banco de dados
+Partida* getPartida(BDPartidas* bd, int index);
+
 // Função para liberar memória alocada para o banco de dados de partidas
 void liberarBDPartidas(BDPartidas* bd);
 

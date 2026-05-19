@@ -59,6 +59,8 @@ int getGolsTime2(Partida* p) {
 }
 
 
+
+
 // Função para liberar memória alocada para a partida
 void liberarPartida(Partida* p) {
     if (p != NULL) {

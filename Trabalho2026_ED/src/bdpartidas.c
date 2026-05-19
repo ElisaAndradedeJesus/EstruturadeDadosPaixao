@@ -95,6 +95,20 @@ BDPartidas* criarBDPartidasDeArquivo(const char* nomeArquivo) {
     return bd;
 }
 
+int getSizeofBDPartidas(BDPartidas* bd) {
+    if (bd != NULL) {
+        return bd->nElementos;
+    }
+    return -1;  // Valor inválido se o banco de dados for NULL
+}
+
+Partida* getPartida(BDPartidas* bd, int index) {
+    if (bd != NULL && index >= 0 && index < bd->nElementos) {
+        return bd->partidas[index];
+    }
+    return NULL;  // Retorna NULL se o índice for inválido ou o banco de dados for NULL
+}
+
 // Função para liberar memória alocada para o banco de dados de partidas
 void liberarBDPartidas(BDPartidas* bd) {
     if (bd != NULL) {

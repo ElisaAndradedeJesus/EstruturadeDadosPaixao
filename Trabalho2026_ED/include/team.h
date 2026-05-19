@@ -31,6 +31,21 @@ int getGolsMarcados(Team* t);
 // Função para acessar gols sofridos do time
 int getGolsSofridos(Team* t);
 
+//funções para incrementar o número de vitórias do time
+void incrementarVitorias(Team* t);
+
+// funções para incrementar o número de empates do time
+void incrementarEmpates(Team* t);
+
+// funções para incrementar o número de derrotas do time
+void incrementarDerrotas(Team* t);
+
+// funções para incrementar o número de gols marcados do time
+void incrementarGolsMarcados(Team* t, int gols);
+
+// funções para incrementar o número de gols sofridos do time
+void incrementarGolsSofridos(Team* t, int gols);
+
 // ===================================================================
 
 // Função para liberar memória alocada para o time
