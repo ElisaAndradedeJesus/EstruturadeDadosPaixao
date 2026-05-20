@@ -1,6 +1,5 @@
 # TP (Parte I)_Elisa Andrade de Jesus
-
-Este projeto implementa um sistema de cadastro, consulta, inserção, atualização e remoção de pacientes usando uma lista ligada em C. Os dados são carregados de e salvos em um arquivo CSV, e o usuário interage via terminal por meio de menus, com validações que garantem a integridade dos dados inseridos. (A MODIFICAR)
+Este projeto implementa um sistema de gerenciamento de partidas e times de futebol em linguagem C. O sistema permite consultar times e partidas, inserir, atualizar e remover partidas, além de gerar a tabela de classificação com base nos resultados registrados em arquivos CSV.
 
 ---
 
@@ -25,13 +24,13 @@ Este projeto implementa um sistema de cadastro, consulta, inserção, atualizaç
 │   └── time.c
 ├── Makefile          # Automação de compilação e execução
 ├── main.c            # Ponto de entrada do programa
-├── README.md         # Auto explicativo né, pelo amor de Deus!
+├── README.md         # Informações de execução e funcionamento do programa
 └── tp1.pdf           # Documento guia. Especificações do trabalho.
 ```
 
 ---
 
-### Sobre os arquivos: (TEM QUE MUDAR TUDO)
+### Sobre os arquivos: 
 
 ---
 
@@ -43,34 +42,35 @@ Este projeto implementa um sistema de cadastro, consulta, inserção, atualizaç
 
 - **main.c:** Ponto de entrada do programa. Carrega a interface de usuário.
 
-- **time.c / time.h :** Implementam o TAD `Time`. 
+- **team.c / team.h :** Implementam o TAD `Time`. 
 
 - **partida.c / partida.h :** Implementam o TAD `Partida`.
 
-- **bdtime.c / bdtime.h** 
+- **bdteams.c / bdteams.h :** 
   Implementam o TAD `BDTime`:
   - Acessa o Banco de Dados a carrega os times registrados no arquivo "times.csv"
 
  
-- **paciente.c / paciente.h**  
-  Definem o TAD `Paciente` e funções:  
-  - `paciente_parse()` — converte linha CSV em struct  
-  - `paciente_imprimir()` — formata e exibe um registro  
+- **bdpartidas.c / bdpartidas.h :** Definem o TAD `BDPartida` e funções:   
+  - Acessa o Banco de Dados a carrega os times registrados no arquivo "partidas.csv";
 
-- **ui.c / ui.h**  
-  Contêm toda a lógica de interação:  
-  - menus de consulta, inserção, atualização e remoção  
-  - paginação na impressão  
-  - validações de CPF, nome, idade e data  
+- **BD :** Pasta com todos os arquivos que emulam o Banco de Dados do projeto.
 
-- **util.c / util.h:** Fornecem `strcasestr_custom()`, uma busca de substring **case-insensitive**.
+- **include :** Pasta com os arquivos .h (os headers) criados.
+
+- **src :** Pasta com os arquivos .c referentes as TADs.
+
+- **.gitignore :** Arquivo responsável para garantir que nenhum arquivo .o vá para o repositório do GitHub.
+
+- **tp1.pdf :** Documento utilizado como consuta durante a construão do programa, contém requisitos e outras informações importantes que moldaram as escolhas de codificação.
 
 ---
 
 ## TADs utilizados: (TEM QUE MUDAR TUDO)
 
 ### 1. Time
-O projeto utiliza o TAD **Paciente**, definido como uma `struct` em `time.c`, que possui os seguintes campos:
+
+O projeto utiliza o TAD **Time**, definido como uma `struct` em `team.c`, que possui os seguintes campos:
 
 - `id` (int): Número identificador do time.
 - `nome` (char[50]): Nome do time.
@@ -82,20 +82,30 @@ O projeto utiliza o TAD **Paciente**, definido como uma `struct` em `time.c`, qu
 - `golsMarcados` (int): Quantos gols marcaram.
 - `golsSofridos` (int): Quantos gols sofreram.
 
-Este TAD é a base para manipulação dos dados, permitindo que as operações de consulta e impressão sejam realizadas de forma consistente e organizada.
+Este TAD é a base para manipulação dos dados do time.
+### 2. BDTimes 
 
-### 2. BDTimes (lista ligada)
+O TAD **BDTimes**, definido em `bdtimes.h`, representa uma estrutura dinâmica baseada em lista ligada que armazena múltiplos registros de times. Possui os seguintes campos:
 
-O TAD **BDTimes**, definido em `bdtimes.h`, representa uma estrutura dinâmica baseada em lista ligada que armazena múltiplos registros de pacientes. Ela é composta por nós (`struct No`), onde cada nó guarda um `Paciente` e aponta para o próximo na sequência.
+- `nElementos` (int): Número de times armazenados.
 
-- `No`:  
-  - `paciente` (Paciente): Estrutura contendo os dados do paciente.  
-  - `proximo` (No*): Ponteiro para o próximo nó da lista.
+- `capacidade` (int): Quantidade máxima de elementos que se pode armazenar.
 
-- `BDPaciente`:  
-  - `inicio` (No*): Ponteiro para o primeiro nó da lista, que representa o início da base de dados.
+- `teams` (Team**): Arrey com ponteiros para os teams.
 
-Este TAD permite o gerenciamento flexível da coleção de pacientes, possibilitando operações como inserção, busca, atualização, remoção, leitura e escrita em arquivo CSV. 
+Este TAD é a base para manipulação dos dados de todos os times cadastrados.
+
+### 2. BDPartidas 
+
+O TAD **BDTimes**, definido em `bdtimes.h`, representa uma estrutura dinâmica baseada em lista ligada que armazena múltiplos registros de times. Possui os seguintes campos:
+
+- `nElementos` (int): Número de times armazenados.
+
+- `capacidade` (int): Quantidade máxima de elementos que se pode armazenar.
+
+- `teams` (Team**): Arrey com ponteiros para os teams.
+
+Este TAD é a base para manipulação de todas as partidas.
 
 ---
 
@@ -112,11 +122,15 @@ Se não:
     cd exemplo
    ```
 
-
+**Para rodar o programa:** 
+```bash
+  make 
+  ```
+O comando `make` executa clean, compile e run para facilitar a execução do programa. Porém casoaja a nescessidade das etapas serem executadas separadamente:
 
 1. **Compilar**  
    ```bash
-   make
+   make compile
    ```
 ---
 
@@ -132,12 +146,13 @@ Se não:
    make clean
    ```
 
-
 ---
 
 ## Principais Decisões de Implementação
 
-- **Lista Ligada:** Facilita inserção e remoção sem realocar estruturas inteiras.
+
+
+- **Vetores Dinâmicos de Ponteiros:** Os bancos de dados (BDTeams e BDPartidas) foram implementados utilizando vetores dinâmicos de ponteiros, permitindo armazenamento flexível e crescimento conforme necessário.
 
 - **Validação de Entrada:**  
   - CPF: 11 dígitos numéricos, formatado como `xxx.xxx.xxx-xx`  

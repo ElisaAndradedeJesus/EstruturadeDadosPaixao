@@ -90,6 +90,23 @@ int getGolsSofridos(Team* t) {
     return -1;  // Valor inválido se o time for NULL
 }
 
+// Função para calcular saldo de gols do time
+int getSaldoGols(Team* t) {
+    if (t != NULL) {
+        return t->golsMarcados - t->golsSofridos;
+    }
+    return -999;  // Valor inválido se o time for NULL
+}
+
+// Função para calcular pontos ganhos do time
+int getPontosGanhos(Team* t) {
+    if (t != NULL) {
+        return t->vitorias * 3 + t->empates; // 3 pontos por vitória e 1 ponto por empate
+    }
+    return -999;  // Valor inválido se o time for NULL
+}
+
+//funções para incrementar o número de vitórias do time
 void incrementarVitorias(Team* t) {
     if (t != NULL) {
         t->vitorias++;
@@ -97,6 +114,8 @@ void incrementarVitorias(Team* t) {
         printf("Erro: Time é NULL. Não é possível incrementar vitórias.\n");
     }
 }
+
+// funções para incrementar o número de empates do time
 void incrementarEmpates(Team* t) {
     if (t != NULL) {
         t->empates++;
@@ -105,6 +124,7 @@ void incrementarEmpates(Team* t) {
     }
 }
 
+// funções para incrementar o número de derrotas do time
 void incrementarDerrotas(Team* t) {
     if (t != NULL) {
         t->derrotas++;
@@ -113,6 +133,7 @@ void incrementarDerrotas(Team* t) {
     }
 }
 
+// funções para incrementar o número de gols marcados do time
 void incrementarGolsMarcados(Team* t, int gols) {
     if (t != NULL) {
         t->golsMarcados += gols;
@@ -120,6 +141,8 @@ void incrementarGolsMarcados(Team* t, int gols) {
         printf("Erro: Time é NULL. Não é possível incrementar gols marcados.\n");
     }
 }
+
+// funções para incrementar o número de gols sofridos do time
 void incrementarGolsSofridos(Team* t, int gols) {
     if (t != NULL) {
         t->golsSofridos += gols;

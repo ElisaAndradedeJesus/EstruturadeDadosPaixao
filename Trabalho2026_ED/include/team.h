@@ -8,7 +8,6 @@ typedef struct team Team;
 Team* criarTeam(int id, const char* nome);
 
 // ===================================================================
-// FUNÇÕES GET PARA ACESSAR OS ATRIBUTOS DO TIME
 
 // Função para acessar Id do time
 int getIdTeam(Team* t);
@@ -30,6 +29,12 @@ int getGolsMarcados(Team* t);
 
 // Função para acessar gols sofridos do time
 int getGolsSofridos(Team* t);
+
+// Função para calcular saldo de gols do time
+int getSaldoGols(Team* t);
+
+// Função para calcular pontos ganhos do time
+int getPontosGanhos(Team* t);
 
 //funções para incrementar o número de vitórias do time
 void incrementarVitorias(Team* t);

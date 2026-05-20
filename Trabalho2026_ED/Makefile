@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -I include
 SRC = main.c src/*.c
 OUT = programa
 
-.PHONY: all compile clean attach detach dump
+.PHONY: all compile run clean
 
 all: clean compile run
 

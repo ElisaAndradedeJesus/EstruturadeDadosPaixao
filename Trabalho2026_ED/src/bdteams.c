@@ -108,12 +108,38 @@ Team* getTeam(BDTeams* bd, int index) {
     return bd->teams[index];
 }
 
+// Função para adicionar um time ao banco de dados de times
+void adicionarTeam(BDTeams* bd, Team* t) {
+    if (bd == NULL || t == NULL) {
+        printf("Erro: Banco de dados ou time é NULL. Não é possível adicionar o time.\n");
+        return;
+    }
+    if (bd->nElementos >= bd->capacidade) {
+        int sucesso = reallocateBDTeams(bd);
+        if (!sucesso) {
+            printf("Erro ao realocar memória para os times no banco de dados. Time não adicionado.\n");
+            return;
+        }
+    }
+    bd->teams[bd->nElementos++] = t;
+}
+
 // Função para liberar memória alocada para o banco de dados de times
 void liberarBDTeams(BDTeams* bd) {
     if (bd != NULL) {
         for (int i = 0; i < bd->nElementos; i++) {
             liberarTeam(bd->teams[i]);
         }
+        free(bd->teams);
+        free(bd);
+    }
+}
+
+
+// Função para liberar memória alocada para o banco de dados de times, sem liberar os times individuais
+// (útil para casos onde os times são compartilhados entre diferentes bancos de dados)
+void liberarBDTeamsAux(BDTeams* bd) {
+    if (bd != NULL) {
         free(bd->teams);
         free(bd);
     }

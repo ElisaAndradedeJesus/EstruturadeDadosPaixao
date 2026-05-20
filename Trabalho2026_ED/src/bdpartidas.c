@@ -119,3 +119,12 @@ void liberarBDPartidas(BDPartidas* bd) {
         free(bd);
     }
 }
+
+// Função para liberar memória alocada para o banco de dados de partidas, sem liberar as partidas individuais 
+// (útil para casos onde as partidas são compartilhadas entre diferentes bancos de dados)
+void liberarBDPartidasAux(BDPartidas* bd) {
+    if (bd != NULL) {
+        free(bd->partidas);
+        free(bd);
+    }
+}

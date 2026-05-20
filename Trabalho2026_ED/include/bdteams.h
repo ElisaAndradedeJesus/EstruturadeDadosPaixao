@@ -19,7 +19,14 @@ int getSizeofBDTeams(BDTeams* bd);
 // Função para acessar um time específico do banco de dados
 Team* getTeam(BDTeams* bd, int index);
 
+// Função para adicionar um time ao banco de dados de times
+void adicionarTeam(BDTeams* bd, Team* t);
+
 // Função para liberar memória alocada para o banco de dados de times
 void liberarBDTeams(BDTeams* bd);
+
+// Função para liberar memória alocada para o banco de dados de times, sem liberar os times individuais
+// (útil para casos onde os times são compartilhados entre diferentes bancos de dados)
+void liberarBDTeamsAux(BDTeams* bd);
 
 #endif // BDTEAMS_H
