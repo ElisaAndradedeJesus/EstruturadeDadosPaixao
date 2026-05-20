@@ -5,7 +5,9 @@
 #include <stddef.h>
 
 #include "team.h"
+#include "partida.h"
 #include "bdteams.h"
+#include "bdpartidas.h"
 
 struct bdteams{
     int nElementos; //número de elementos atualmente na lista
@@ -122,6 +124,60 @@ void adicionarTeam(BDTeams* bd, Team* t) {
         }
     }
     bd->teams[bd->nElementos++] = t;
+}
+
+// Função para buscar um time pelo ID no banco de dados de times
+// É uma função auxiliar para facilitar a atualização dos dados dos times com base nas partidas
+Team* buscarTeamPorId(BDTeams* bd, int id) {
+    for (int i = 0; i < getSizeofBDTeams(bd); i++) {
+        Team* t = getTeam(bd, i);
+        if (getIdTeam(t) == id) {
+            return t;
+        }
+    }
+    return NULL; // Retorna NULL se o time não for encontrado
+}
+
+//Pega os Dados de uma partida e atualiza os dados dos times envolvidos na partida, como vitórias, empates, derrotas, gols marcados e gols sofridos
+// Função auxiliar de carregarDadosDePartidasEmTimes, que é a função principal para carregar os dados de todas as partidas e atualizar os dados dos times no banco de dados de times
+void carregarDadosEmTimes(BDTeams* bd, Partida* p) {
+    // Atualiza a tabela de classificação com base no resultado da partida
+    int idTime1 = getIdTime1(p);
+    int idTime2 = getIdTime2(p);
+    int golsTime1 = getGolsTime1(p);
+    int golsTime2 = getGolsTime2(p);
+
+    Team* time1 = buscarTeamPorId(bd, idTime1);
+    Team* time2 = buscarTeamPorId(bd, idTime2);
+
+    if (golsTime1 > golsTime2) {
+        incrementarVitorias(time1);
+        incrementarDerrotas(time2);
+    } else if (golsTime1 < golsTime2) {
+        incrementarDerrotas(time1);
+        incrementarVitorias(time2);
+    } else {
+        incrementarEmpates(time1);
+        incrementarEmpates(time2);
+    }
+
+    incrementarGolsMarcados(time1, golsTime1);
+    incrementarGolsSofridos(time1, golsTime2);
+    incrementarGolsMarcados(time2, golsTime2);
+    incrementarGolsSofridos(time2, golsTime1);
+
+}
+
+// Função para buscar times pelo nome ou prefixo no banco de dados de times
+BDTeams* buscarPorTeamNoBD(BDTeams* bd, char* prefixo) {
+    BDTeams* resultados = criarBDTeams(); // Cria um novo banco de dados para armazenar os resultados
+    for (int i = 0; i < getSizeofBDTeams(bd); i++) {
+        Team* t = getTeam(bd, i);
+        if (strncmp(getNome(t), prefixo, strlen(prefixo)) == 0) { // Verifica se o nome do time contém o prefixo fornecido
+            adicionarTeam(resultados, t); // Adiciona o time ao banco de dados de resultados
+        }
+    }
+    return resultados;
 }
 
 // Função para liberar memória alocada para o banco de dados de times

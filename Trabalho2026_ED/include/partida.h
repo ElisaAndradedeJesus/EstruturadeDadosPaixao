@@ -1,5 +1,5 @@
-#ifndef TIME_H
-#define TIME_H
+#ifndef PARTIDA_H
+#define PARTIDA_H
 
 #include <assert.h>
 

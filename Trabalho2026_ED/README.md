@@ -1,5 +1,5 @@
 # TP (Parte I)_Elisa Andrade de Jesus
-Este projeto implementa um sistema de gerenciamento de partidas e times de futebol em linguagem C. O sistema permite consultar times e partidas, inserir, atualizar e remover partidas, além de gerar a tabela de classificação com base nos resultados registrados em arquivos CSV.
+Este projeto implementa um sistema de gerenciamento de partidas e times de futebol em linguagem C. O sistema permite consultar times e partidas, gerar a tabela de classificação e possui estrutura preparada para inserção, atualização e remoção de partidas em versões futuras.
 
 ---
 
@@ -15,11 +15,13 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
 ├── include           # Pasta com arquivos .h
 │   ├── bdpartidas.h 
 │   ├── bdteams.h
+│   ├── menu.h
 │   ├── partida.h
 │   └── team.h
 ├── src               # Pasta com arquivos .c
 │   ├── bdpartidas.c
 │   ├── bdteams.c
+│   ├── menu.c
 │   ├── partida.c
 │   └── team.c
 ├── Makefile          # Automação de compilação e execução
@@ -40,7 +42,12 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
   - `make clean`: remove o executável gerado;
   - `make compile`: compila o programa em um arquivo executável;
 
-- **main.c:** Ponto de entrada do programa. Carrega a interface de usuário.
+- **main.c:** Ponto de entrada do programa. Carrega 
+  - carrega CSVs
+  - cria os bancos
+  - atualiza estatísticas dos times com base nas partidas
+  - controla loop do menu
+  - libera memória
 
 - **team.c / team.h :** Implementam o TAD `Team`. 
 
@@ -182,14 +189,17 @@ O comando `make` executa clean, compile e run para facilitar a execução do pro
 
 <!-- - **Persistência em CSV:** Ao iniciar, lê tudo em memória; ao inserir/atualizar/remover, salva automaticamente no arquivo. (acho que posso adicionar esta linha quando fizer aparte 2 do trabalho, mas no momento n salvo nada no CSV pois n há a necessidade)-->
 
-- **Busca por Prefixo Case Sensitive:**  Foi utilizado `strncmp` em todas as buscas com prefixo. 
+- **Busca por Prefixo Case Sensitive:** Foi utilizada a função `strncmp`, mantendo diferenciação entre letras maiúsculas e minúsculas durante as buscas por prefixo.
+
+- **Cálculo da classificação a partir das partidas:** Os dados estatísticos dos times (vitórias, derrotas, empates e saldo relacionado a gols) são atualizados dinamicamente com base no banco de partidas carregado em memória.
 
 - **Modularização:** O sistema foi dividido em módulos independentes para separar responsabilidades e melhorar organização/manutenção do código:
 
-  - modelos de dados (Team e Partida);
-  - estruturas de armazenamento (BDTeams e BDPartidas);
-  - controle principal e interação com o usuário (main.c).
+  - modelos de dados (`Team` e `Partida`);
+  - estruturas de armazenamento (`BDTeams` e `BDPartidas`);
+  - interface e interação com o usuário (`menu.c`);
+  - fluxo principal de execução (`main.c`).
 
 ---
 
-Este README.md oferece uma visão completa do sistema, desde a estrutura dos arquivos até as principais decisões tomadas para que o sistema tenha uma funcionalidade plena.
+Este README.md oferece uma visão geral da estrutura, funcionamento e principais decisões de implementação do sistema.

@@ -4,7 +4,9 @@
 #include <string.h>
 #include <stddef.h>
 
+#include "team.h"
 #include "partida.h"
+#include "bdteams.h"
 #include "bdpartidas.h"
 
 struct bdpartidas{
@@ -107,6 +109,52 @@ Partida* getPartida(BDPartidas* bd, int index) {
         return bd->partidas[index];
     }
     return NULL;  // Retorna NULL se o índice for inválido ou o banco de dados for NULL
+}
+
+// Função para buscar partidas onde o time mandante tem um nome que corresponde ao prefixo fornecido
+BDPartidas* buscarPartidaPorNomeTimeMandante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams) {
+    BDPartidas* partidasEncontradas = criarBDPartidas(); // Cria um novo banco de dados para armazenar as partidas encontradas
+    BDTeams* timesComPrefixo = buscarPorTeamNoBD(bdTeams, prefixo); // Busca os times que correspondem ao prefixo fornecido
+
+    for (int i = 0; i < getSizeofBDPartidas(bdPartidas); i++) {
+        Partida* p = getPartida(bdPartidas, i);
+        for (int j = 0; j < getSizeofBDTeams(timesComPrefixo); j++) {
+            Team* t = getTeam(timesComPrefixo, j);
+            if (getIdTime1(p) == getIdTeam(t)) { // Verifica se o time é o mandante
+                int sucesso = adicionarPartida(partidasEncontradas, p); // Adiciona a partida ao banco de dados de partidas encontradas
+                if (sucesso == 0) {
+                    liberarBDPartidasAux(partidasEncontradas);
+                    return NULL; // Retorna NULL em caso de erro ao adicionar a partida
+                }
+            }
+        }
+    }
+
+    liberarBDTeamsAux(timesComPrefixo);
+    return partidasEncontradas; // Retorna o banco de dados com as partidas encontradas
+}
+
+// Função para buscar partidas onde o time visitante tem um nome que corresponde ao prefixo fornecido
+BDPartidas* buscarPartidaPorNomeTimeVisitante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams) {
+    BDPartidas* partidasEncontradas = criarBDPartidas(); // Cria um novo banco de dados para armazenar as partidas encontradas
+    BDTeams* timesComPrefixo = buscarPorTeamNoBD(bdTeams, prefixo); // Busca os times que correspondem ao prefixo fornecido
+
+    for (int i = 0; i < getSizeofBDPartidas(bdPartidas); i++) {
+        Partida* p = getPartida(bdPartidas, i);
+        for (int j = 0; j < getSizeofBDTeams(timesComPrefixo); j++) {
+            Team* t = getTeam(timesComPrefixo, j);
+            if (getIdTime2(p) == getIdTeam(t)) { // Verifica se o time é o mandante
+                int sucesso = adicionarPartida(partidasEncontradas, p); // Adiciona a partida ao banco de dados de partidas encontradas
+                if (sucesso == 0) {
+                    liberarBDPartidasAux(partidasEncontradas);
+                    return NULL; // Retorna NULL em caso de erro ao adicionar a partida
+                }
+            }
+        }
+    }
+
+    liberarBDTeamsAux(timesComPrefixo);
+    return partidasEncontradas; // Retorna o banco de dados com as partidas encontradas
 }
 
 // Função para liberar memória alocada para o banco de dados de partidas
