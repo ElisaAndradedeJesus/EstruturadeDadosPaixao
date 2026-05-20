@@ -23,7 +23,7 @@ Repositório dedicado às atividades, exercícios e trabalhos desenvolvidos dura
     ├── EP7
     └── EP8
 ├── Exercicios        # Alguns exercícios feitos
-├── Trabalho2026_ED   # Trabalho de ED 2026
+├── CampeonatoComputacionaldeFutebol_ElisadeJesus   # Trabalho de ED 2026
 ├── README.md         # Auto explicativo né, pelo amor de Deus!
 
 ```
