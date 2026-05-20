@@ -42,12 +42,14 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
   - `make clean`: remove o executável gerado;
   - `make compile`: compila o programa em um arquivo executável;
 
-- **main.c:** Ponto de entrada do programa. Carrega 
-  - carrega CSVs
-  - cria os bancos
-  - atualiza estatísticas dos times com base nas partidas
-  - controla loop do menu
-  - libera memória
+- **main.c:** Ponto de entrada do programa.
+  - Carrega CSVs
+  - Cria os bancos
+  - Atualiza estatísticas dos times com base nas partidas
+  - Controla loop do menu
+  - Libera memória
+
+- **menu.c / menu.h :** Implementam as funções relacionadas à interface textual e interação com o usuário, incluindo exibição do menu principal, limpeza do terminal e operações de consulta e impressão de dados.
 
 - **team.c / team.h :** Implementam o TAD `Team`. 
 
@@ -59,7 +61,7 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
 
  
 - **bdpartidas.c / bdpartidas.h :** Definem o TAD `BDPartidas` e funções:   
-  - Acessa o Banco de Dados e carrega as partidas registradas no arquivo "partidas.csv";
+  - Acessa o Banco de Dados e carrega as partidas registradas no arquivo "partidas_completo.csv";
 
 - **BD :** Pasta com todos os arquivos que emulam o Banco de Dados do projeto.
 
