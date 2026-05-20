@@ -34,7 +34,7 @@ Repositório dedicado às atividades, exercícios e trabalhos desenvolvidos dura
 
 - **Exercicios:** Pasta com alguns exercícios realizados. Possui também o caderno de Exercícios para consulta.
 
-- **Trabalho2026_ED:** Projeto principal da disciplina desenvolvido em C utilizando modularização, TADs e estruturas dinâmicas para gerenciamento e processamento de dados.
+- **CampeonatoComputacionaldeFutebol_ElisadeJesus:** Projeto principal da disciplina desenvolvido em C utilizando modularização, TADs e estruturas dinâmicas para gerenciamento e processamento de dados.
 
 
 
@@ -43,12 +43,12 @@ Repositório dedicado às atividades, exercícios e trabalhos desenvolvidos dura
 **Clone o repositório:**
  ```bash
    git clone https://github.com/ElisaAndradedeJesus/EstruturadeDadosPaixao.git
-    cd EstruturadeDadosPaixao
+   cd EstruturadeDadosPaixao
    ```
 
 ### Como Executar o Trabalho:
 
-Passo a passo detalhado no README da pasta "Trabalho2026_ED". 
+Passo a passo detalhado no README da pasta `CampeonatoComputacionaldeFutebol_ElisadeJesus`. 
 
 ### Como Executar as EPs:
 Cada EP tem um Makefile próprio. Para executar a EP desejada primeiro  é necessário entrar diretório da EP.
@@ -74,4 +74,31 @@ Abra a pasta no VSCode ou execute no terminal:
    make run
    ```
 
+## Subtree
+
+A pasta `CampeonatoComputacionaldeFutebol_ElisadeJesus` também possui um repositório próprio:
+
+`https://github.com/ElisaAndradedeJesus/CampeonatoComputacionaldeFutebol_ElisadeJesus.git`
+
+Essa separação foi adotada para facilitar a entrega e melhorar a visibilidade do trabalho final, mantendo um repositório dedicado apenas ao projeto.
+
+As alterações feitas neste repositório podem ser sincronizadas com o repositório específico do trabalho seguindo os passos abaixo:
+
+   1. **Atualizar o repositório principal:**
+      ```bash
+      git add .
+      git commit -m "alterações"
+      git push origin main   # repositório principal
+      ```
+      Também é possível fazer isso pela interface do VSCode.
+
+   2. **Sincronizar a subpasta com o repositório independente**
+      ```bash
+      make sync-campeonato  # repositório independente
+      ```
+      O comando `make sync-campeonato` executa internamente `git subtree push`, que envia apenas a pasta `CampeonatoComputacionaldeFutebol_ElisadeJesus/` para o repositório independente, preservando o restante da estrutura do repositório principal.
+
+Isso permite manter dois repositórios sincronizados sem duplicar arquivos manualmente.
+
 ---
+
