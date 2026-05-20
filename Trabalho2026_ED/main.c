@@ -22,8 +22,8 @@ void carregarDadosDePartidasEmTimes(BDTeams* bdTeams, BDPartidas* bdPartidas) {
 
 int main(){
 
-    char nomeArquivoTimes[] = "BD/times.csv";
-    char nomeArquivoPartidas[] = "BD/partidas_completo.csv";
+    char nomeArquivoTimes[] = "BD/bd_times.csv";
+    char nomeArquivoPartidas[] = "BD/bd_partidas.csv";
     BDTeams* bdTimes = criarBDTeamsDeArquivo(nomeArquivoTimes);
     BDPartidas* bdPartidas = criarBDPartidasDeArquivo(nomeArquivoPartidas);
 

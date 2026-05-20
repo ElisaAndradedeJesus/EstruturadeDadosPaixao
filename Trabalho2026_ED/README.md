@@ -8,10 +8,10 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
 ```
 ├── BD                # Pasta Base de dados no formato CSV
 │   ├── app.py
-│   ├── partidas_completo.csv
+│   ├── bd_partidas.csv
 │   ├── partidas_parcial.csv
 │   ├── partidas_vazio.csv
-│   └── times.csv
+│   └── bd_times.csv
 ├── include           # Pasta com arquivos .h
 │   ├── bdpartidas.h 
 │   ├── bdteams.h
@@ -57,11 +57,11 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
 
 - **bdteams.c / bdteams.h :** 
   Implementam o TAD `BDTeams`:
-  - Acessa o Banco de Dados e carrega os times registrados no arquivo "times.csv"
+  - Acessa o Banco de Dados e carrega os times registrados no arquivo "bd_times.csv"
 
  
 - **bdpartidas.c / bdpartidas.h :** Definem o TAD `BDPartidas` e funções:   
-  - Acessa o Banco de Dados e carrega as partidas registradas no arquivo "partidas_completo.csv";
+  - Acessa o Banco de Dados e carrega as partidas registradas no arquivo "bd_partidas.csv";
 
 - **BD :** Pasta com todos os arquivos que emulam o Banco de Dados do projeto.
 
