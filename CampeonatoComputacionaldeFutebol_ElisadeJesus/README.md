@@ -151,8 +151,8 @@ Se não:
 
 **Clone o repositório:**
  ```bash
-   git clone https://github.com/exemplo.git
-    cd exemplo
+   git https://github.com/ElisaAndradedeJesus/CampeonatoComputacionaldeFutebol_ElisadeJesus.git
+   cd CampeonatoComputacionaldeFutebol_ElisadeJesus
    ```
 
 **Para rodar o programa:** 

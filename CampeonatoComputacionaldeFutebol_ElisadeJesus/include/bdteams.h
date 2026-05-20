@@ -8,7 +8,6 @@
 
 
 typedef struct bdteams BDTeams;
-typedef struct bdpartidas BDPartidas; // forward declaration
 
 // cria Vetor de times
 BDTeams* criarBDTeams();
