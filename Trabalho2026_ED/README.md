@@ -14,14 +14,14 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
 │   └── times.csv
 ├── include           # Pasta com arquivos .h
 │   ├── bdpartidas.h 
-│   ├── bdtimes.h
+│   ├── bdteams.h
 │   ├── partida.h
-│   └── time.h
+│   └── team.h
 ├── src               # Pasta com arquivos .c
 │   ├── bdpartidas.c
-│   ├── bdtimes.c
+│   ├── bdteams.c
 │   ├── partida.c
-│   └── time.c
+│   └── team.c
 ├── Makefile          # Automação de compilação e execução
 ├── main.c            # Ponto de entrada do programa
 ├── README.md         # Informações de execução e funcionamento do programa
@@ -37,75 +37,99 @@ Este projeto implementa um sistema de gerenciamento de partidas e times de futeb
 - **Makefile:**  
   - `make`: Executa: `clean compile run` nesta sequência;
   - `make run`: roda o programa;
-  - `make clean`: remove objetos e executáveis  ;
-  - `make compile`: compila oprograma em umarquivo .o;
+  - `make clean`: remove o executável gerado;
+  - `make compile`: compila o programa em um arquivo executável;
 
 - **main.c:** Ponto de entrada do programa. Carrega a interface de usuário.
 
-- **team.c / team.h :** Implementam o TAD `Time`. 
+- **team.c / team.h :** Implementam o TAD `Team`. 
 
 - **partida.c / partida.h :** Implementam o TAD `Partida`.
 
 - **bdteams.c / bdteams.h :** 
-  Implementam o TAD `BDTime`:
-  - Acessa o Banco de Dados a carrega os times registrados no arquivo "times.csv"
+  Implementam o TAD `BDTeams`:
+  - Acessa o Banco de Dados e carrega os times registrados no arquivo "times.csv"
 
  
-- **bdpartidas.c / bdpartidas.h :** Definem o TAD `BDPartida` e funções:   
-  - Acessa o Banco de Dados a carrega os times registrados no arquivo "partidas.csv";
+- **bdpartidas.c / bdpartidas.h :** Definem o TAD `BDPartidas` e funções:   
+  - Acessa o Banco de Dados e carrega as partidas registradas no arquivo "partidas.csv";
 
 - **BD :** Pasta com todos os arquivos que emulam o Banco de Dados do projeto.
 
 - **include :** Pasta com os arquivos .h (os headers) criados.
 
-- **src :** Pasta com os arquivos .c referentes as TADs.
+- **src :** Pasta com os arquivos .c referentes às TADs.
 
 - **.gitignore :** Arquivo responsável para garantir que nenhum arquivo .o vá para o repositório do GitHub.
 
-- **tp1.pdf :** Documento utilizado como consuta durante a construão do programa, contém requisitos e outras informações importantes que moldaram as escolhas de codificação.
+- **tp1.pdf :** Documento utilizado como consulta durante a construção do programa, contém requisitos e outras informações importantes que moldaram as escolhas de codificação.
 
 ---
 
-## TADs utilizados: (TEM QUE MUDAR TUDO)
+## TADs utilizados:
 
-### 1. Time
+### 1. Team
 
-O projeto utiliza o TAD **Time**, definido como uma `struct` em `team.c`, que possui os seguintes campos:
+O projeto utiliza o TAD **Team**, definido como uma `struct` em `team.c`. Este TAD representa cada time e possui os seguintes campos:
 
 - `id` (int): Número identificador do time.
 - `nome` (char[50]): Nome do time.
 
 - `vitorias` (int): Quantas vitórias tiveram.
 - `empates` (int): Quantas vezes empataram.
-- `derrotas` (int): Quantos vazes perderam.
+- `derrotas` (int): Quantas vezes perderam.
 
 - `golsMarcados` (int): Quantos gols marcaram.
 - `golsSofridos` (int): Quantos gols sofreram.
 
 Este TAD é a base para manipulação dos dados do time.
-### 2. BDTimes 
 
-O TAD **BDTimes**, definido em `bdtimes.h`, representa uma estrutura dinâmica baseada em lista ligada que armazena múltiplos registros de times. Possui os seguintes campos:
+### 2. Partida
+
+O projeto utiliza o TAD **Partida**, definido como uma `struct` em `partida.c`, que possui os seguintes campos:
+
+struct partida {
+    int id;
+    int idTime1;
+    int idTime2;
+    int golsTime1;
+    int golsTime2;
+};
+
+- `id` (int): Número identificador da partida.
+
+- `idTime1` (int): Número identificador do time mandante.
+
+- `idTime2` (int): Número identificador do time visitante.
+
+- `golsTime1` (int): Quantos gols o time mandante marcou.
+- `golsTime2` (int): Quantos gols o time visitante marcou.
+
+Este TAD é a base para manipulação dos dados da partida.
+
+### 3. BDTeams 
+
+O TAD **BDTeams**, definido em `bdteams.h`, representa uma estrutura dinâmica baseada em vetores dinâmicos de ponteiros que armazena múltiplos registros de times. Possui os seguintes campos:
 
 - `nElementos` (int): Número de times armazenados.
 
 - `capacidade` (int): Quantidade máxima de elementos que se pode armazenar.
 
-- `teams` (Team**): Arrey com ponteiros para os teams.
+- `teams` (Team**): Array com ponteiros para os times.
 
-Este TAD é a base para manipulação dos dados de todos os times cadastrados.
+Este TAD manipula os dados de todos os times cadastrados.
 
-### 2. BDPartidas 
+### 4. BDPartidas 
 
-O TAD **BDTimes**, definido em `bdtimes.h`, representa uma estrutura dinâmica baseada em lista ligada que armazena múltiplos registros de times. Possui os seguintes campos:
+O TAD **BDPartidas**, definido em `bdpartidas.h`, também representa uma estrutura baseada em vetores dinâmicos que armazena múltiplos registros de partidas. Possui os seguintes campos:
 
-- `nElementos` (int): Número de times armazenados.
+- `nElementos` (int): Número de partidas armazenadas.
 
 - `capacidade` (int): Quantidade máxima de elementos que se pode armazenar.
 
-- `teams` (Team**): Arrey com ponteiros para os teams.
+- `partidas` (Partida**): Array com ponteiros para as partidas.
 
-Este TAD é a base para manipulação de todas as partidas.
+O TAD BDPartidas manipula todas as partidas.
 
 ---
 
@@ -126,7 +150,7 @@ Se não:
 ```bash
   make 
   ```
-O comando `make` executa clean, compile e run para facilitar a execução do programa. Porém casoaja a nescessidade das etapas serem executadas separadamente:
+O comando `make` executa clean, compile e run para facilitar a execução do programa. Porém caso haja a necessidade das etapas serem executadas separadamente:
 
 1. **Compilar**  
    ```bash
@@ -141,7 +165,7 @@ O comando `make` executa clean, compile e run para facilitar a execução do pro
 
 ---
 
-3. **Limpeza dos arquivos objeto**  
+3. **Remover arquivo executável**  
    ```bash
    make clean
    ```
@@ -154,26 +178,17 @@ O comando `make` executa clean, compile e run para facilitar a execução do pro
 
 - **Vetores Dinâmicos de Ponteiros:** Os bancos de dados (BDTeams e BDPartidas) foram implementados utilizando vetores dinâmicos de ponteiros, permitindo armazenamento flexível e crescimento conforme necessário.
 
-- **Validação de Entrada:**  
-  - CPF: 11 dígitos numéricos, formatado como `xxx.xxx.xxx-xx`  
-  - Idade: valor entre 1 e 130  
-  - Data: formato `AAAA-MM-DD`, com checagem de ano, mês e dia  
+- **Terminal limpo regularmente:** Para evitar um terminal poluído por múltiplas execuções do programa. Esta decisão foi puramente estética.
 
-- **Persistência em CSV:** Ao iniciar, lê tudo em memória; ao inserir/atualizar/remover, salva automaticamente no arquivo.
+<!-- - **Persistência em CSV:** Ao iniciar, lê tudo em memória; ao inserir/atualizar/remover, salva automaticamente no arquivo. (acho que posso adicionar esta linha quando fizer aparte 2 do trabalho, mas no momento n salvo nada no CSV pois n há a necessidade)-->
 
-- **Busca por Prefixo e Insensível a Caso:**  
-  - `strncasecmp` para nomes  
-  - `strncmp` para CPFs  
-  - `strcasestr_custom` para buscas arbitrárias  
+- **Busca por Prefixo Case Sensitive:**  Foi utilizado `strncmp` em todas as buscas com prefixo. 
 
-- **Interface Intuitiva:** Contem paginação de 20 registros por tela e confirmações explícitas para operações destrutivas.  
+- **Modularização:** O sistema foi dividido em módulos independentes para separar responsabilidades e melhorar organização/manutenção do código:
 
-- **Modularização:** Fornece uma separação clara entre:
-  - lógica de dados (`bd.*`),
-  - definição do modelo (`paciente.*`),
-  - UI (`ui.*`),
-  - utilitários (`util.*`).
-
+  - modelos de dados (Team e Partida);
+  - estruturas de armazenamento (BDTeams e BDPartidas);
+  - controle principal e interação com o usuário (main.c).
 
 ---
 
