@@ -145,7 +145,7 @@ O TAD BDPartidas manipula todas as partidas.
 ## Instruções para Execução
 Caso esteja seguindo o passo a passo do repositório **EstruturadeDadosPaixao**:
 ```bash
-  cd Trabalho2026_ED
+  cd CampeonatoComputacionaldeFutebol_ElisadeJesus
 ```
 Se não:
 
