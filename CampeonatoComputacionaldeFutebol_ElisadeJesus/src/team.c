@@ -111,7 +111,7 @@ void incrementarVitorias(Team* t) {
     if (t != NULL) {
         t->vitorias++;
     } else {
-        printf("Erro: Time é NULL. Não é possível incrementar vitórias.\n");
+        printf("Erro: Team é NULL. Não é possível incrementar vitórias.\n");
     }
 }
 
@@ -120,7 +120,7 @@ void incrementarEmpates(Team* t) {
     if (t != NULL) {
         t->empates++;
     } else {
-        printf("Erro: Time é NULL. Não é possível incrementar empates.\n");
+        printf("Erro: Team é NULL. Não é possível incrementar empates.\n");
     }
 }
 
@@ -129,7 +129,7 @@ void incrementarDerrotas(Team* t) {
     if (t != NULL) {
         t->derrotas++;
     } else {
-        printf("Erro: Time é NULL. Não é possível incrementar derrotas.\n");
+        printf("Erro: Team é NULL. Não é possível incrementar derrotas.\n");
     }
 }
 
@@ -138,7 +138,7 @@ void incrementarGolsMarcados(Team* t, int gols) {
     if (t != NULL) {
         t->golsMarcados += gols;
     } else {
-        printf("Erro: Time é NULL. Não é possível incrementar gols marcados.\n");
+        printf("Erro: Team é NULL. Não é possível incrementar gols marcados.\n");
     }
 }
 
@@ -147,7 +147,7 @@ void incrementarGolsSofridos(Team* t, int gols) {
     if (t != NULL) {
         t->golsSofridos += gols;
     } else {
-        printf("Erro: Time é NULL. Não é possível incrementar gols sofridos.\n");
+        printf("Erro: Team é NULL. Não é possível incrementar gols sofridos.\n");
     }
 }
 

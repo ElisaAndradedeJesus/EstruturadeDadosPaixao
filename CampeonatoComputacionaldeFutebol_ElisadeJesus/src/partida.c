@@ -7,23 +7,23 @@
 
 struct partida {
     int id;
-    int idTime1;
-    int idTime2;
-    int golsTime1;
-    int golsTime2;
+    int idTeam1;
+    int idTeam2;
+    int golsTeam1;
+    int golsTeam2;
 };
 
-Partida* criarPartida(int id, int idTime1, int idTime2, int golsTime1, int golsTime2) {
+Partida* criarPartida(int id, int idTeam1, int idTeam2, int golsTeam1, int golsTeam2) {
     Partida* p = (Partida*)malloc(sizeof(Partida));
     if (p == NULL) {
         fprintf(stderr, "Erro ao alocar memória para a partida.\n");
         exit(EXIT_FAILURE);
     }
     p->id = id;
-    p->idTime1 = idTime1;
-    p->idTime2 = idTime2;
-    p->golsTime1 = golsTime1;
-    p->golsTime2 = golsTime2;
+    p->idTeam1 = idTeam1;
+    p->idTeam2 = idTeam2;
+    p->golsTeam1 = golsTeam1;
+    p->golsTeam2 = golsTeam2;
     return p;
 }
 
@@ -35,27 +35,27 @@ int getIdPartida(Partida* p) {
 
 
 /// Função para acessar Id do time 1
-int getIdTime1(Partida* p) {
+int getIdTeam1(Partida* p) {
     assert(p != NULL);
-    return p->idTime1;
+    return p->idTeam1;
 }
 
 // Função para acessar Id do time 2
-int getIdTime2(Partida* p) {
+int getIdTeam2(Partida* p) {
     assert(p != NULL);
-    return p->idTime2;
+    return p->idTeam2;
 }
 
 // Função para acessar gols do time 1
-int getGolsTime1(Partida* p) {
+int getGolsTeam1(Partida* p) {
     assert(p != NULL);
-    return p->golsTime1;
+    return p->golsTeam1;
 }
 
 // Função para acessar gols do time 2
-int getGolsTime2(Partida* p) {
+int getGolsTeam2(Partida* p) {
     assert(p != NULL);
-    return p->golsTime2;
+    return p->golsTeam2;
 }
 
 

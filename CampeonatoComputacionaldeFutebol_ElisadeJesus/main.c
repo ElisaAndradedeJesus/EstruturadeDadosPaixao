@@ -9,25 +9,15 @@
 #include <string.h>
 
 
-// Função para carregar os dados de todas as partidas e atualizar os dados dos times no banco de dados de times 
-// só pode ser executada 1 vez a n ser que eu crie alguma forma de resertar os dados dos times.
-void carregarDadosDePartidasEmTimes(BDTeams* bdTeams, BDPartidas* bdPartidas) {
-    for (int i = 0; i < getSizeofBDPartidas(bdPartidas); i++) {
-        Partida* p = getPartida(bdPartidas, i);
-        carregarDadosEmTimes(bdTeams, p);
-    }
-}
-
-
 
 int main(){
 
-    char nomeArquivoTimes[] = "BD/bd_times.csv";
+    char nomeArquivoTeams[] = "BD/bd_times.csv";
     char nomeArquivoPartidas[] = "BD/bd_partidas.csv";
-    BDTeams* bdTimes = criarBDTeamsDeArquivo(nomeArquivoTimes);
+    BDTeams* bdTeams = criarBDTeamsDeArquivo(nomeArquivoTeams);
     BDPartidas* bdPartidas = criarBDPartidasDeArquivo(nomeArquivoPartidas);
 
-    carregarDadosDePartidasEmTimes(bdTimes, bdPartidas);
+    carregarDadosDePartidasEmTeams(bdTeams, bdPartidas);
 
     interfaceUser();
 
@@ -39,10 +29,10 @@ int main(){
         limparTela();
 
         if(opcao == '1'){
-            consultarTeamsEncontrados(bdTimes); // Busca o times
+            consultarTeamsEncontrados(bdTeams); // Busca o times
 
         }else if(opcao == '2'){ 
-            consultarPartida(bdPartidas, bdTimes); // Consulta as partidas no banco de dados de partidas
+            consultarPartida(bdPartidas, bdTeams); // Consulta as partidas no banco de dados de partidas
 
         }else if(opcao == '3'){
 
@@ -57,7 +47,7 @@ int main(){
             printf("A implementar...\n");
 
         }else if(opcao == '6'){
-            imprimirClassificacao(bdTimes);
+            imprimirClassificacao(bdTeams);
 
         }else{
 
@@ -75,7 +65,7 @@ int main(){
         scanf(" %c", &opcao);
     }
     printf("저는 딸기를 사랑해요!\n");
-    liberarBDTeams(bdTimes);
+    liberarBDTeams(bdTeams);
     liberarBDPartidas(bdPartidas);
     return 0;
 }

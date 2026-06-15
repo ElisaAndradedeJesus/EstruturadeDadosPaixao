@@ -66,9 +66,9 @@ BDTeams* criarBDTeamsDeArquivo(const char* nomeArquivo) {
 
     // Lê os dados do arquivo e adiciona os times ao banco de dados
     int id;
-    char nomeTime[50];
-    while (fscanf(arquivo, " %d,%49[^\n]", &id, nomeTime) == 2) {
-        Team* t = criarTeam(id, nomeTime);
+    char nomeTeam[50];
+    while (fscanf(arquivo, " %d,%49[^\n]", &id, nomeTeam) == 2) {
+        Team* t = criarTeam(id, nomeTeam);
         if (t == NULL) {
             liberarBDTeams(bd);
             fclose(arquivo);
@@ -97,6 +97,15 @@ BDTeams* criarBDTeamsDeArquivo(const char* nomeArquivo) {
     return bd;
 }
 
+// Função para carregar os dados de todas as partidas e atualizar os dados dos times no banco de dados de times 
+// só pode ser executada 1 vez a n ser que eu crie alguma forma de resertar os dados dos times.
+void carregarDadosDePartidasEmTeams(BDTeams* bdTeams, BDPartidas* bdPartidas) {
+    for (int i = 0; i < getSizeofBDPartidas(bdPartidas); i++) {
+        Partida* p = getPartida(bdPartidas, i);
+        carregarDadosEmTeams(bdTeams, p);
+    }
+}
+
 // Função para aber o tamanho do banco de dados de times
 int getSizeofBDTeams(BDTeams* bd) {
     assert(bd != NULL);
@@ -119,7 +128,7 @@ void adicionarTeam(BDTeams* bd, Team* t) {
     if (bd->nElementos >= bd->capacidade) {
         int sucesso = reallocateBDTeams(bd);
         if (!sucesso) {
-            printf("Erro ao realocar memória para os times no banco de dados. Time não adicionado.\n");
+            printf("Erro ao realocar memória para os times no banco de dados. Team não adicionado.\n");
             return;
         }
     }
@@ -139,32 +148,32 @@ Team* buscarTeamPorId(BDTeams* bd, int id) {
 }
 
 //Pega os Dados de uma partida e atualiza os dados dos times envolvidos na partida, como vitórias, empates, derrotas, gols marcados e gols sofridos
-// Função auxiliar de carregarDadosDePartidasEmTimes, que é a função principal para carregar os dados de todas as partidas e atualizar os dados dos times no banco de dados de times
-void carregarDadosEmTimes(BDTeams* bd, Partida* p) {
+// Função auxiliar de carregarDadosDePartidasEmTeams, que é a função principal para carregar os dados de todas as partidas e atualizar os dados dos times no banco de dados de times
+void carregarDadosEmTeams(BDTeams* bd, Partida* p) {
     // Atualiza a tabela de classificação com base no resultado da partida
-    int idTime1 = getIdTime1(p);
-    int idTime2 = getIdTime2(p);
-    int golsTime1 = getGolsTime1(p);
-    int golsTime2 = getGolsTime2(p);
+    int idTeam1 = getIdTeam1(p);
+    int idTeam2 = getIdTeam2(p);
+    int golsTeam1 = getGolsTeam1(p);
+    int golsTeam2 = getGolsTeam2(p);
 
-    Team* time1 = buscarTeamPorId(bd, idTime1);
-    Team* time2 = buscarTeamPorId(bd, idTime2);
+    Team* team1 = buscarTeamPorId(bd, idTeam1);
+    Team* team2 = buscarTeamPorId(bd, idTeam2);
 
-    if (golsTime1 > golsTime2) {
-        incrementarVitorias(time1);
-        incrementarDerrotas(time2);
-    } else if (golsTime1 < golsTime2) {
-        incrementarDerrotas(time1);
-        incrementarVitorias(time2);
+    if (golsTeam1 > golsTeam2) {
+        incrementarVitorias(team1);
+        incrementarDerrotas(team2);
+    } else if (golsTeam1 < golsTeam2) {
+        incrementarDerrotas(team1);
+        incrementarVitorias(team2);
     } else {
-        incrementarEmpates(time1);
-        incrementarEmpates(time2);
+        incrementarEmpates(team1);
+        incrementarEmpates(team2);
     }
 
-    incrementarGolsMarcados(time1, golsTime1);
-    incrementarGolsSofridos(time1, golsTime2);
-    incrementarGolsMarcados(time2, golsTime2);
-    incrementarGolsSofridos(time2, golsTime1);
+    incrementarGolsMarcados(team1, golsTeam1);
+    incrementarGolsSofridos(team1, golsTeam2);
+    incrementarGolsMarcados(team2, golsTeam2);
+    incrementarGolsSofridos(team2, golsTeam1);
 
 }
 

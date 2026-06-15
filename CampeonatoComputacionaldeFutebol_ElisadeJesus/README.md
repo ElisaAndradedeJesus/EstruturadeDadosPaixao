@@ -99,20 +99,20 @@ O projeto utiliza o TAD **Partida**, definido como uma `struct` em `partida.c`, 
 
 struct partida {
     int id;
-    int idTime1;
-    int idTime2;
-    int golsTime1;
-    int golsTime2;
+    int idTeam1;
+    int idTeam2;
+    int golsTeam1;
+    int golsTeam2;
 };
 
 - `id` (int): Número identificador da partida.
 
-- `idTime1` (int): Número identificador do time mandante.
+- `idTeam1` (int): Número identificador do time mandante.
 
-- `idTime2` (int): Número identificador do time visitante.
+- `idTeam2` (int): Número identificador do time visitante.
 
-- `golsTime1` (int): Quantos gols o time mandante marcou.
-- `golsTime2` (int): Quantos gols o time visitante marcou.
+- `golsTeam1` (int): Quantos gols o time mandante marcou.
+- `golsTeam2` (int): Quantos gols o time visitante marcou.
 
 Este TAD é a base para manipulação dos dados da partida.
 

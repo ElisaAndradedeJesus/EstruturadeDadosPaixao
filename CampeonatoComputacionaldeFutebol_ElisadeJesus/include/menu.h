@@ -17,16 +17,16 @@ void interfaceUser();
 // Função para limpar a tela. Pra evitar que o menu fique poluído com as informações das consultas e atualizações
 void limparTela();
 
-// Função para imprimir a tabela de classificação dos times
+// Função para imprimir a tabela de classificação dos teams
 void imprimirClassificacao(BDTeams* bd);
 
-// Função para imprimir as partidas encontradas, mostrando o nome dos times e o resultado da partida
+// Função para imprimir as partidas encontradas, mostrando o nome dos teams e o resultado da partida
 void printarPartidasEncontradas(BDPartidas* bdPartidas, BDTeams* bdTeams);
 
-// Função para imprimir os times encontrados, mostrando o nome do time e suas estatísticas
-void printarTimesEncontrados(BDTeams* bd);
+// Função para imprimir os teams encontrados, mostrando o nome do team e suas estatísticas
+void printarTeamsEncontrados(BDTeams* bd);
 
-// Função para consultar times encontrados, mostrando o nome do time e suas estatísticas
+// Função para consultar teams encontrados, mostrando o nome do team e suas estatísticas
 void consultarTeamsEncontrados(BDTeams* bd);
 
 // Função para consultar partidas

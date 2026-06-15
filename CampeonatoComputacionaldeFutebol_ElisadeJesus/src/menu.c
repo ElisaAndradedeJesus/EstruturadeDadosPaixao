@@ -35,7 +35,7 @@ void limparTela() {
 void imprimirClassificacao(BDTeams* bd) {
     printf("Tabela de Classificação:\n");
     printf("%-5s %-20s %-5s %-5s %-5s %-5s %-5s %-5s %-5s\n",
-       "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
+       "ID", "Team", "V", "E", "D", "GM", "GS", "S", "PG");
 
     for (int i = 0; i < getSizeofBDTeams(bd); i++) {
         Team* t = getTeam(bd, i);
@@ -56,25 +56,25 @@ void imprimirClassificacao(BDTeams* bd) {
 void printarPartidasEncontradas(BDPartidas* bdPartidas, BDTeams* bdTeams) {
     for (int i = 0; i < getSizeofBDPartidas(bdPartidas); i++) {
         Partida* p = getPartida(bdPartidas, i);
-        Team* timeMandante = buscarTeamPorId(bdTeams, getIdTime1(p));
-        Team* timeVisitante = buscarTeamPorId(bdTeams, getIdTime2(p));
+        Team* teamMandante = buscarTeamPorId(bdTeams, getIdTeam1(p));
+        Team* teamVisitante = buscarTeamPorId(bdTeams, getIdTeam2(p));
         printf("%-5d %-20s %d x %d %-20s\n",
             getIdPartida(p),
-            getNome(timeMandante),
-            getGolsTime1(p),
-            getGolsTime2(p),
-            getNome(timeVisitante)
+            getNome(teamMandante),
+            getGolsTeam1(p),
+            getGolsTeam2(p),
+            getNome(teamVisitante)
         );
     }
     
 }
 
 // Função para imprimir os times encontrados, mostrando o nome do time e suas estatísticas
-// )Função auxiliar de consultarTeamsEncontrados, que é a função principal para consultar times encontrados, mostrando o nome do time e suas estatísticas)
-void printarTimesEncontrados(BDTeams* bd) {
-    printf("Times encontrados:\n");
+// Função auxiliar de consultarTeamsEncontrados, que é a função principal para consultar teams encontrados, mostrando o nome do team e suas estatísticas
+void printarTeamsEncontrados(BDTeams* bd) {
+    printf("Teams encontrados:\n");
     printf("%-5s %-20s %-5s %-5s %-5s %-5s %-5s %-5s %-5s\n",
-       "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
+       "ID", "Team", "V", "E", "D", "GM", "GS", "S", "PG");
     for (int i = 0; i < getSizeofBDTeams(bd); i++) {
         Team* t = getTeam(bd, i);
         printf("%-5d %-20s %-5d %-5d %-5d %-5d %-5d %-5d %-5d\n",
@@ -103,7 +103,7 @@ void consultarTeamsEncontrados(BDTeams* bd) {
     if (getSizeofBDTeams(resultados) == 0) {
         printf("Nenhum time encontrado com o prefixo '%s'.\n", prefixo);
     } else {
-        printarTimesEncontrados(resultados);
+        printarTeamsEncontrados(resultados);
     }
     liberarBDTeamsAux(resultados);
 }
@@ -127,9 +127,9 @@ void consultarPartida(BDPartidas* bdPartidas,BDTeams* bdTeams) {
         scanf(" %49[^\n]", prefixo);
 
         printf("Partidas encontradas:\n");
-        printf("%-5s %-20s %-20s\n", "ID", "Time1", "Time2");
+        printf("%-5s %-20s %-20s\n", "ID", "Team1", "Team2");
 
-        BDPartidas* partidasEncontradas = buscarPartidaPorNomeTimeMandante(bdPartidas, prefixo, bdTeams);
+        BDPartidas* partidasEncontradas = buscarPartidaPorNomeTeamMandante(bdPartidas, prefixo, bdTeams);
         if(partidasEncontradas == NULL){
             printf("Erro ao buscar partidas para o time mandante com o prefixo '%s'.\n", prefixo);
         } else{
@@ -146,9 +146,9 @@ void consultarPartida(BDPartidas* bdPartidas,BDTeams* bdTeams) {
         scanf(" %49[^\n]", prefixo);
 
         printf("Partidas encontradas:\n");
-        printf("%-5s %-20s %-20s\n", "ID", "Time1", "Time2");
+        printf("%-5s %-20s %-20s\n", "ID", "Team1", "Team2");
 
-        BDPartidas* partidasEncontradas = buscarPartidaPorNomeTimeVisitante(bdPartidas, prefixo, bdTeams);
+        BDPartidas* partidasEncontradas = buscarPartidaPorNomeTeamVisitante(bdPartidas, prefixo, bdTeams);
         if (partidasEncontradas == NULL) {
             printf("Erro ao buscar partidas para o time visitante com o prefixo '%s'.\n", prefixo);
         } else {    
@@ -165,10 +165,10 @@ void consultarPartida(BDPartidas* bdPartidas,BDTeams* bdTeams) {
         scanf(" %49[^\n]", prefixo);
 
         printf("Partidas encontradas:\n");
-        printf("%-5s %-20s %-20s\n", "ID", "Time1", "Time2");
+        printf("%-5s %-20s %-20s\n", "ID", "Team1", "Team2");
 
-        BDPartidas* partidasEncontradasMandante = buscarPartidaPorNomeTimeMandante(bdPartidas, prefixo, bdTeams);
-        BDPartidas* partidasEncontradasVisitante = buscarPartidaPorNomeTimeVisitante(bdPartidas, prefixo, bdTeams);
+        BDPartidas* partidasEncontradasMandante = buscarPartidaPorNomeTeamMandante(bdPartidas, prefixo, bdTeams);
+        BDPartidas* partidasEncontradasVisitante = buscarPartidaPorNomeTeamVisitante(bdPartidas, prefixo, bdTeams);
 
         if(partidasEncontradasMandante == NULL && partidasEncontradasVisitante == NULL){
             printf("Erro ao buscar partidas para o time com o prefixo '%s'.\n", prefixo);

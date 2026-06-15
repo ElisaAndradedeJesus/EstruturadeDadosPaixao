@@ -76,11 +76,11 @@ BDPartidas* criarBDPartidasDeArquivo(const char* nomeArquivo) {
     fgets(linha, sizeof(linha), arquivo);
 
     // CHECAR DE ESSE WHILE ESTÁ CERTO, SE O FEOF FUNCIONA PARA O FORMATO DO ARQUIVO
-    int id, time1, time2, golsTime1, golsTime2;
+    int id, team1, team2, golsTeam1, golsTeam2;
 
     // Lê as partidas do arquivo e as adiciona ao banco de dados
-    while (fscanf(arquivo, " %d,%d,%d,%d,%d", &id, &time1, &time2, &golsTime1, &golsTime2) == 5) {
-        Partida* partida = criarPartida(id, time1, time2, golsTime1, golsTime2);
+    while (fscanf(arquivo, " %d,%d,%d,%d,%d", &id, &team1, &team2, &golsTeam1, &golsTeam2) == 5) {
+        Partida* partida = criarPartida(id, team1, team2, golsTeam1, golsTeam2);
         if (partida == NULL) {
             printf("Erro ao criar partida a partir dos dados do arquivo.\n");
             break;
@@ -111,8 +111,8 @@ Partida* getPartida(BDPartidas* bd, int index) {
     return NULL;  // Retorna NULL se o índice for inválido ou o banco de dados for NULL
 }
 
-// Função para buscar partidas onde o time mandante tem um nome que corresponde ao prefixo fornecido
-BDPartidas* buscarPartidaPorNomeTimeMandante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams) {
+// Função para buscar partidas onde o team mandante tem um nome que corresponde ao prefixo fornecido
+BDPartidas* buscarPartidaPorNomeTeamMandante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams) {
     BDPartidas* partidasEncontradas = criarBDPartidas(); // Cria um novo banco de dados para armazenar as partidas encontradas
     BDTeams* timesComPrefixo = buscarPorTeamNoBD(bdTeams, prefixo); // Busca os times que correspondem ao prefixo fornecido
 
@@ -120,7 +120,7 @@ BDPartidas* buscarPartidaPorNomeTimeMandante(BDPartidas* bdPartidas, char* prefi
         Partida* p = getPartida(bdPartidas, i);
         for (int j = 0; j < getSizeofBDTeams(timesComPrefixo); j++) {
             Team* t = getTeam(timesComPrefixo, j);
-            if (getIdTime1(p) == getIdTeam(t)) { // Verifica se o time é o mandante
+            if (getIdTeam1(p) == getIdTeam(t)) { // Verifica se o time é o mandante
                 int sucesso = adicionarPartida(partidasEncontradas, p); // Adiciona a partida ao banco de dados de partidas encontradas
                 if (sucesso == 0) {
                     liberarBDPartidasAux(partidasEncontradas);
@@ -135,7 +135,7 @@ BDPartidas* buscarPartidaPorNomeTimeMandante(BDPartidas* bdPartidas, char* prefi
 }
 
 // Função para buscar partidas onde o time visitante tem um nome que corresponde ao prefixo fornecido
-BDPartidas* buscarPartidaPorNomeTimeVisitante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams) {
+BDPartidas* buscarPartidaPorNomeTeamVisitante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams) {
     BDPartidas* partidasEncontradas = criarBDPartidas(); // Cria um novo banco de dados para armazenar as partidas encontradas
     BDTeams* timesComPrefixo = buscarPorTeamNoBD(bdTeams, prefixo); // Busca os times que correspondem ao prefixo fornecido
 
@@ -143,7 +143,7 @@ BDPartidas* buscarPartidaPorNomeTimeVisitante(BDPartidas* bdPartidas, char* pref
         Partida* p = getPartida(bdPartidas, i);
         for (int j = 0; j < getSizeofBDTeams(timesComPrefixo); j++) {
             Team* t = getTeam(timesComPrefixo, j);
-            if (getIdTime2(p) == getIdTeam(t)) { // Verifica se o time é o mandante
+            if (getIdTeam2(p) == getIdTeam(t)) { // Verifica se o time é o mandante
                 int sucesso = adicionarPartida(partidasEncontradas, p); // Adiciona a partida ao banco de dados de partidas encontradas
                 if (sucesso == 0) {
                     liberarBDPartidasAux(partidasEncontradas);

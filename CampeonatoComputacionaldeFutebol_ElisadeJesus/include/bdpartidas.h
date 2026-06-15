@@ -24,11 +24,11 @@ int getSizeofBDPartidas(BDPartidas* bd);
 // Função para acessar uma partida específica do banco de dados
 Partida* getPartida(BDPartidas* bd, int index);
 
-// Função para buscar partidas onde o time mandante tem um nome que corresponde ao prefixo fornecido
-BDPartidas* buscarPartidaPorNomeTimeMandante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams);
+// Função para buscar partidas onde o team mandante tem um nome que corresponde ao prefixo fornecido
+BDPartidas* buscarPartidaPorNomeTeamMandante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams);
 
-// Função para buscar partidas onde o time visitante tem um nome que corresponde ao prefixo fornecido
-BDPartidas* buscarPartidaPorNomeTimeVisitante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams);
+// Função para buscar partidas onde o team visitante tem um nome que corresponde ao prefixo fornecido
+BDPartidas* buscarPartidaPorNomeTeamVisitante(BDPartidas* bdPartidas, char* prefixo, BDTeams* bdTeams);
 
 // Função para liberar memória alocada para o banco de dados de partidas
 void liberarBDPartidas(BDPartidas* bd);
