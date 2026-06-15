@@ -17,7 +17,7 @@ TARGET = test_stack
 .PHONY: all compile run clean
 
 # Default target (compile and run)
-all: compile run
+all: clean compile run
 
 # Explicit compile target (produces the target program)
 compile: $(TARGET)

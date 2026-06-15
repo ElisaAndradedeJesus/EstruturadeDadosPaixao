@@ -73,7 +73,7 @@ void s_free(Stack *s)
 void s_print(Stack *s)
 {
     for (StackNode *p = s->top; p != NULL; p = p->next)
-        printf("%.2f ", p->info);
+        printf("%c ", p->info);
 
     printf("\n");
 }
