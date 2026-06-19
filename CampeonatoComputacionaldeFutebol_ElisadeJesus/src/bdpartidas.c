@@ -75,7 +75,6 @@ BDPartidas* criarBDPartidasDeArquivo(const char* nomeArquivo) {
     char linha[100];
     fgets(linha, sizeof(linha), arquivo);
 
-    // CHECAR DE ESSE WHILE ESTÁ CERTO, SE O FEOF FUNCIONA PARA O FORMATO DO ARQUIVO
     int id, team1, team2, golsTeam1, golsTeam2;
 
     // Lê as partidas do arquivo e as adiciona ao banco de dados

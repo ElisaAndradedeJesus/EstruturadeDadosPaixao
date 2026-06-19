@@ -64,7 +64,7 @@ int main(){
         interfaceUser();
         scanf(" %c", &opcao);
     }
-    printf("저는 딸기를 사랑해요!\n");
+
     liberarBDTeams(bdTeams);
     liberarBDPartidas(bdPartidas);
     return 0;
