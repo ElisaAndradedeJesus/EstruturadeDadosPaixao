@@ -1,0 +1,6 @@
+*.o
+programa
+test_*
+*.zip
+*.out
+*.exe
