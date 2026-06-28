@@ -191,7 +191,7 @@ O comando `make` executa clean, compile e run para facilitar a execução do pro
 
 <!-- - **Persistência em CSV:** Ao iniciar, lê tudo em memória; ao inserir/atualizar/remover, salva automaticamente no arquivo. (acho que posso adicionar esta linha quando fizer aparte 2 do trabalho, mas no momento n salvo nada no CSV pois n há a necessidade)-->
 
-- **Busca por Prefixo Case Sensitive:** Foi utilizada a função `strncmp`, mantendo diferenciação entre letras maiúsculas e minúsculas durante as buscas por prefixo.
+- **Busca por Prefixo Case Insensitive:** Foi utilizada a função `strncmp`, mantendo diferenciação entre letras maiúsculas e minúsculas durante as buscas por prefixo.
 
 - **Cálculo da classificação a partir das partidas:** Os dados estatísticos dos times (vitórias, derrotas, empates e saldo relacionado a gols) são atualizados dinamicamente com base no banco de partidas carregado em memória.
 

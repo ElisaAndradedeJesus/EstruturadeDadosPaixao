@@ -8,6 +8,7 @@
 
 
 typedef struct bdpartidas BDPartidas;
+typedef struct bdteams BDTeams;
 
 // Função para criar um banco de dados de partidas
 BDPartidas *criarBDPartidas();

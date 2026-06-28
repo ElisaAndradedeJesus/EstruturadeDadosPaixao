@@ -9,10 +9,15 @@
 #include "bdteams.h"
 #include "bdpartidas.h"
 
-struct bdpartidas{
-    int nElementos; //número de elementos atualmente na lista
-    int capacidade; //capacidade máxima da lista
-    Partida** partidas; //array de ponteiros para as partidas
+typedef struct PartidaNode {
+    Partida* partida;
+    struct PartidaNode* proximo;
+} PartidaNode;
+
+struct bdpartidas {
+    int nElementos;
+    PartidaNode* primeiro;
+    PartidaNode* ultimo;
 };
 
 // Função para criar um banco de dados de partidas
@@ -23,37 +28,30 @@ BDPartidas *criarBDPartidas() {
         return NULL;
     }
     bd->nElementos = 0;
-    bd->capacidade = 10; // Capacidade inicial, pode ser ajustada conforme necessário
-    bd->partidas = (Partida**)malloc(bd->capacidade * sizeof(Partida*));
-    if (bd->partidas == NULL) {
-        printf("Erro ao alocar memória para as partidas no banco de dados.\n");
-        free(bd);
-        return NULL;
-    }
+    bd->primeiro = NULL;
+    bd->ultimo = NULL;
+
     return bd;
 }
 
-//Função para almentar a capacidade do banco de dados de partidas
-static int reallocateBDPartidas(BDPartidas* bd) {
-    Partida** temp = (Partida**)realloc(bd->partidas, bd->capacidade * 2 * sizeof(Partida*));   
-    // Verifica se a realocação foi bem-sucedida
-    if (temp == NULL) {
-        printf("Erro ao realocar memória para as partidas no banco de dados.\n");
-        return 0;
-    }
-    bd->partidas = temp;
-    bd->capacidade *= 2;
-    return 1;
-}
+
 // insere uma partida no banco de dados
 int adicionarPartida(BDPartidas* bd, Partida* partida) {
-    if (bd->nElementos == bd->capacidade) {
-        if (reallocateBDPartidas(bd) == 0) {
-            printf("Erro ao realocar memória para as partidas no banco de dados.\n");
-            return 0;
-        }
+    PartidaNode* novoNo = (PartidaNode*)malloc(sizeof(PartidaNode));
+    if (novoNo == NULL) {
+        printf("Erro ao alocar memória para o novo nó da lista de partidas.\n");
+        return 0;
     }
-    bd->partidas[bd->nElementos++] = partida;
+    novoNo->partida = partida;
+    novoNo->proximo = NULL;
+
+    if (bd->primeiro == NULL) {
+        bd->primeiro = novoNo;
+    } else {
+        bd->ultimo->proximo = novoNo;
+    }
+    bd->ultimo = novoNo;
+    bd->nElementos++;
     return 1;
 }
 
@@ -105,7 +103,11 @@ int getSizeofBDPartidas(BDPartidas* bd) {
 
 Partida* getPartida(BDPartidas* bd, int index) {
     if (bd != NULL && index >= 0 && index < bd->nElementos) {
-        return bd->partidas[index];
+        PartidaNode* atual = bd->primeiro;
+        for (int i = 0; i < index; i++) {
+            atual = atual->proximo;
+        }
+        return atual->partida;
     }
     return NULL;  // Retorna NULL se o índice for inválido ou o banco de dados for NULL
 }
@@ -159,19 +161,33 @@ BDPartidas* buscarPartidaPorNomeTeamVisitante(BDPartidas* bdPartidas, char* pref
 // Função para liberar memória alocada para o banco de dados de partidas
 void liberarBDPartidas(BDPartidas* bd) {
     if (bd != NULL) {
-        for (int i = 0; i < bd->nElementos; i++) {
-            liberarPartida(bd->partidas[i]);            
+        PartidaNode* atual = bd->primeiro;
+
+        while (atual != NULL) {
+            PartidaNode* proximo = atual->proximo;
+            liberarPartida(atual->partida);
+            free(atual);
+            atual = proximo;
         }
-        free(bd->partidas);
+
         free(bd);
     }
 }
+
 
 // Função para liberar memória alocada para o banco de dados de partidas, sem liberar as partidas individuais 
 // (útil para casos onde as partidas são compartilhadas entre diferentes bancos de dados)
 void liberarBDPartidasAux(BDPartidas* bd) {
     if (bd != NULL) {
-        free(bd->partidas);
+        PartidaNode* atual = bd->primeiro;
+
+        while (atual != NULL) {
+            PartidaNode* proximo = atual->proximo;
+            free(atual);
+            atual = proximo;
+        }
+
         free(bd);
     }
 }
+

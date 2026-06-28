@@ -51,6 +51,8 @@ void incrementarGolsMarcados(Team* t, int gols);
 // funções para incrementar o número de gols sofridos do team
 void incrementarGolsSofridos(Team* t, int gols);
 
+void resetarEstatisticasTeam(Team* t);
+
 // ===================================================================
 
 // Função para liberar memória alocada para o team

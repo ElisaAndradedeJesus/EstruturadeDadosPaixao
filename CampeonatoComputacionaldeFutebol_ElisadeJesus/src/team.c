@@ -158,3 +158,12 @@ void liberarTeam(Team* t) {
     }
 }
 
+void resetarEstatisticasTeam(Team* t){
+        if (t != NULL) {
+        t->vitorias = 0;
+        t->empates = 0;
+        t->derrotas = 0;
+        t->golsMarcados = 0;
+        t->golsSofridos = 0;
+    }
+}

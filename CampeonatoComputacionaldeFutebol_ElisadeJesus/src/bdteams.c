@@ -3,17 +3,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+#include <strings.h>
 
 #include "team.h"
 #include "partida.h"
 #include "bdteams.h"
 #include "bdpartidas.h"
 
+
 struct bdteams{
     int nElementos; //número de elementos atualmente na lista
-    int capacidade; //capacidade máxima da lista
-    Team** teams; //array de ponteiros para os teams
+    struct TeamNode* primeiro;
+    struct TeamNode* ultimo;
 };
+
+typedef struct TeamNode {
+    Team* team;
+    struct TeamNode* proximo;
+} TeamNode;
 
 BDTeams* criarBDTeams() {
     BDTeams* bd = (BDTeams*)malloc(sizeof(BDTeams));
@@ -22,28 +29,9 @@ BDTeams* criarBDTeams() {
         return NULL;
     }
     bd->nElementos = 0;
-    bd->capacidade = 10; // Capacidade inicial, pode ser ajustada conforme necessário
-    bd->teams = (Team**)malloc(bd->capacidade * sizeof(Team*));
-    if (bd->teams == NULL) {
-        fprintf(stderr, "Erro ao alocar memória para os times no banco de dados.\n");
-        free(bd);
-        return NULL;
-    }
+    bd->primeiro = NULL;
+    bd->ultimo = NULL;
     return bd;
-}
-
-//Função para almentar a capacidade do banco de dados de times
-static int reallocateBDTeams(BDTeams* bd) {
-    Team** temp = (Team**)realloc(bd->teams, bd->capacidade * 2 * sizeof(Team*));
-
-    // Verifica se a realocação foi bem-sucedida
-    if (temp == NULL) {
-        printf("Erro ao realocar memória para os times no banco de dados.\n");
-        return 0;
-    }
-    bd->teams = temp;
-    bd->capacidade *= 2;
-    return 1;
 }
 
 //cria Vetor de um arquivo externo
@@ -74,22 +62,7 @@ BDTeams* criarBDTeamsDeArquivo(const char* nomeArquivo) {
             fclose(arquivo);
             return NULL;
         }
-        if(bd->nElementos < bd->capacidade){
-            // Adiciona o time ao banco de dados
-            bd->teams[bd->nElementos++] = t;
-
-        }else{
-            int sucesso = reallocateBDTeams(bd);
-            if(sucesso == 1){
-                // Adiciona o time ao banco de dados
-                bd->teams[bd->nElementos++] = t;
-            }else{
-                liberarBDTeams(bd);
-                fclose(arquivo);
-                return NULL;
-            }
-        }
-        
+        adicionarTeam(bd, t);        
 
     }
 
@@ -116,8 +89,17 @@ int getSizeofBDTeams(BDTeams* bd) {
 Team* getTeam(BDTeams* bd, int index) {
     assert(bd != NULL);
     assert(index >= 0 && index < bd->nElementos);
-    return bd->teams[index];
+
+    TeamNode* atual = bd->primeiro;
+
+    for (int i = 0; i < index; i++) {
+        atual = atual->proximo;
+    }
+
+    return atual->team;
 }
+
+
 
 // Função para adicionar um time ao banco de dados de times
 void adicionarTeam(BDTeams* bd, Team* t) {
@@ -125,14 +107,24 @@ void adicionarTeam(BDTeams* bd, Team* t) {
         printf("Erro: Banco de dados ou time é NULL. Não é possível adicionar o time.\n");
         return;
     }
-    if (bd->nElementos >= bd->capacidade) {
-        int sucesso = reallocateBDTeams(bd);
-        if (!sucesso) {
-            printf("Erro ao realocar memória para os times no banco de dados. Team não adicionado.\n");
-            return;
-        }
+    TeamNode* novoNo = (TeamNode*)malloc(sizeof(TeamNode));
+    if (novoNo == NULL) {
+        printf("Erro ao alocar memória para o novo nó da lista encadeada.\n");
+        return;
     }
-    bd->teams[bd->nElementos++] = t;
+    novoNo->team = t;
+    novoNo->proximo = NULL;
+
+    if (bd->primeiro == NULL) {
+        // Se a lista estiver vazia, o novo nó é o primeiro
+        bd->primeiro = novoNo;
+        bd->ultimo = novoNo;
+    } else {
+        // Caso contrário, adiciona o novo nó ao final da lista
+        bd->ultimo->proximo = novoNo;
+        bd->ultimo = novoNo;
+    }
+    bd->nElementos++;
 }
 
 // Função para buscar um time pelo ID no banco de dados de times
@@ -182,20 +174,52 @@ BDTeams* buscarPorTeamNoBD(BDTeams* bd, char* prefixo) {
     BDTeams* resultados = criarBDTeams(); // Cria um novo banco de dados para armazenar os resultados
     for (int i = 0; i < getSizeofBDTeams(bd); i++) {
         Team* t = getTeam(bd, i);
-        if (strncmp(getNome(t), prefixo, strlen(prefixo)) == 0) { // Verifica se o nome do time contém o prefixo fornecido
+        if (strncasecmp(getNome(t), prefixo, strlen(prefixo)) == 0) { // Verifica se o nome do time contém o prefixo fornecido
             adicionarTeam(resultados, t); // Adiciona o time ao banco de dados de resultados
         }
     }
     return resultados;
 }
 
+//Função para limpar estatísticas de todos os teams
+void limparEstatisticasBDTeams(BDTeams* bd) {
+    if (bd != NULL) {
+        for (int i = 0; i < getSizeofBDTeams(bd); i++) {
+            Team* t = getTeam(bd, i);
+            resetarEstatisticasTeam(t);
+        }
+    }
+}
+
+//função pra atualizar os dados dos times
+void atualizarDadosTeam(BDTeams* bdTeams, BDPartidas* bdPartidas) {
+    if (bdTeams == NULL || bdPartidas == NULL) {
+        printf("Erro: Banco de dados de times ou partidas é NULL.\n");
+        return;
+    }
+    //resetar dados do banco de dados para garantir que não haja dados repetidos
+    limparEstatisticasBDTeams(bdTeams);
+
+    for (int i = 0; i < getSizeofBDPartidas(bdPartidas); i++) {
+        Partida* p = getPartida(bdPartidas, i);
+        carregarDadosEmTeams(bdTeams, p);
+    }
+}
+
+
+
 // Função para liberar memória alocada para o banco de dados de times
 void liberarBDTeams(BDTeams* bd) {
     if (bd != NULL) {
-        for (int i = 0; i < bd->nElementos; i++) {
-            liberarTeam(bd->teams[i]);
+        TeamNode* atual = bd->primeiro;
+
+        while (atual != NULL) {
+            TeamNode* proximo = atual->proximo;
+            liberarTeam(atual->team);
+            free(atual);
+            atual = proximo;
         }
-        free(bd->teams);
+
         free(bd);
     }
 }
@@ -205,7 +229,14 @@ void liberarBDTeams(BDTeams* bd) {
 // (útil para casos onde os times são compartilhados entre diferentes bancos de dados)
 void liberarBDTeamsAux(BDTeams* bd) {
     if (bd != NULL) {
-        free(bd->teams);
+        TeamNode* atual = bd->primeiro;
+
+        while (atual != NULL) {
+            TeamNode* proximo = atual->proximo;
+            free(atual);
+            atual = proximo;
+        }
+
         free(bd);
     }
 }

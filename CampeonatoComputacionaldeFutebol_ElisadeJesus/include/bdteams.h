@@ -8,6 +8,7 @@
 
 
 typedef struct bdteams BDTeams;
+typedef struct bdpartidas BDPartidas;
 
 // cria Vetor de teams
 BDTeams* criarBDTeams();
