@@ -3,6 +3,7 @@
 #include "bdteams.h"
 #include "bdpartidas.h"
 #include "menu.h"
+#include "classificacao.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +17,7 @@ int main(){
     char nomeArquivoPartidas[] = "BD/bd_partidas.csv";
     BDTeams* bdTeams = criarBDTeamsDeArquivo(nomeArquivoTeams);
     BDPartidas* bdPartidas = criarBDPartidasDeArquivo(nomeArquivoPartidas);
+    Classificacao* classificacao = gerarClassificacao(bdTeams);
 
     carregarDadosDePartidasEmTeams(bdTeams, bdPartidas);
 
@@ -47,7 +49,7 @@ int main(){
             printf("A implementar...\n");
 
         }else if(opcao == '6'){
-            imprimirClassificacao(bdTeams);
+            imprimirTabelaClassificacao(classificacao);
 
         }else{
 
@@ -67,5 +69,7 @@ int main(){
 
     liberarBDTeams(bdTeams);
     liberarBDPartidas(bdPartidas);
+    salvarClassificacaoEmArquivo(classificacao, "BD/classificacao.csv");
+    liberarClassificacao(classificacao);
     return 0;
 }

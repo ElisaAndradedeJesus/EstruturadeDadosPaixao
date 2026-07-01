@@ -9,6 +9,8 @@
 #include "partida.h"
 #include "bdpartidas.h"
 
+#include "classificacao.h"
+
 
 
 //Conjunto de printes pra fazer a telinha inicial do programa
@@ -18,7 +20,7 @@ void interfaceUser();
 void limparTela();
 
 // Função para imprimir a tabela de classificação dos teams
-void imprimirClassificacao(BDTeams* bd);
+void imprimirTabelaClassificacao(Classificacao* classificacao);
 
 // Função para imprimir as partidas encontradas, mostrando o nome dos teams e o resultado da partida
 void printarPartidasEncontradas(BDPartidas* bdPartidas, BDTeams* bdTeams);

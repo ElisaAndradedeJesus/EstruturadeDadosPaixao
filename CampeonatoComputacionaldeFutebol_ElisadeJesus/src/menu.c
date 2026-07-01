@@ -2,6 +2,7 @@
 #include "partida.h"
 #include "bdteams.h"
 #include "bdpartidas.h"
+#include "classificacao.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,25 +32,18 @@ void limparTela() {
     #endif
 }
 
-// Função para imprimir a tabela de classificação dos times
-void imprimirClassificacao(BDTeams* bd) {
+// Função para imprimir a tabela de classificação dos teams
+void imprimirTabelaClassificacao(Classificacao* classificacao) {
+    if (classificacao == NULL) {
+        printf("Classificação não disponível.\n");
+        return;
+    }
+
     printf("Tabela de Classificação:\n");
     printf("%-5s %-20s %-5s %-5s %-5s %-5s %-5s %-5s %-5s\n",
        "ID", "Team", "V", "E", "D", "GM", "GS", "S", "PG");
 
-    for (int i = 0; i < getSizeofBDTeams(bd); i++) {
-        Team* t = getTeam(bd, i);
-        printf("%-5d %-20s %-5d %-5d %-5d %-5d %-5d %-5d %-5d\n",
-        getIdTeam(t),
-        getNome(t),
-        getVitorias(t),
-        getEmpates(t),
-        getDerrotas(t),
-        getGolsMarcados(t),
-        getGolsSofridos(t),
-        getSaldoGols(t),
-        getPontosGanhos(t));
-    }
+    imprimirClassificacao(classificacao);
 }
 
 // Função para imprimir as partidas encontradas, mostrando o nome dos times e o resultado da partida
