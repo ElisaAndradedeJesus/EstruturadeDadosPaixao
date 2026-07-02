@@ -16,7 +16,7 @@ void ordenarClassificacao(Classificacao* classificacao);
 // Função para criar uma nova classificação e carregar os dados da classificação
 Classificacao* gerarClassificacao(BDTeams* bdTeams);
 
-// Função para imprimir a tabela de classificação dos times
+// Função para imprimir a tabela de classificação dos teams
 void imprimirClassificacao(Classificacao* classificacao);
 
 // Função para liberar memória alocada para a classificação

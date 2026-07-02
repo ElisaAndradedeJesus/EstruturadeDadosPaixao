@@ -25,7 +25,7 @@ typedef struct TeamNode {
 BDTeams* criarBDTeams() {
     BDTeams* bd = (BDTeams*)malloc(sizeof(BDTeams));
     if (bd == NULL) {
-        printf("Erro ao alocar memória para o banco de dados de times.\n");
+        printf("Erro ao alocar memória para o banco de dados de teams.\n");
         return NULL;
     }
     bd->nElementos = 0;
@@ -52,7 +52,7 @@ BDTeams* criarBDTeamsDeArquivo(const char* nomeArquivo) {
     char linha[100];
     fgets(linha, sizeof(linha), arquivo);
 
-    // Lê os dados do arquivo e adiciona os times ao banco de dados
+    // Lê os dados do arquivo e adiciona os teams ao banco de dados
     int id;
     char nomeTeam[50];
     while (fscanf(arquivo, " %d,%49[^\n]", &id, nomeTeam) == 2) {
@@ -70,8 +70,8 @@ BDTeams* criarBDTeamsDeArquivo(const char* nomeArquivo) {
     return bd;
 }
 
-// Função para carregar os dados de todas as partidas e atualizar os dados dos times no banco de dados de times 
-// só pode ser executada 1 vez a n ser que eu crie alguma forma de resertar os dados dos times.
+// Função para carregar os dados de todas as partidas e atualizar os dados dos teams no banco de dados de teams 
+// só pode ser executada 1 vez a n ser que eu crie alguma forma de resertar os dados dos teams.
 void carregarDadosDePartidasEmTeams(BDTeams* bdTeams, BDPartidas* bdPartidas) {
     for (int i = 0; i < getSizeofBDPartidas(bdPartidas); i++) {
         Partida* p = getPartida(bdPartidas, i);
@@ -79,13 +79,13 @@ void carregarDadosDePartidasEmTeams(BDTeams* bdTeams, BDPartidas* bdPartidas) {
     }
 }
 
-// Função para aber o tamanho do banco de dados de times
+// Função para aber o tamanho do banco de dados de teams
 int getSizeofBDTeams(BDTeams* bd) {
     assert(bd != NULL);
     return bd->nElementos;
 }
 
-// Função para acessar um time específico do banco de dados
+// Função para acessar um team específico do banco de dados
 Team* getTeam(BDTeams* bd, int index) {
     assert(bd != NULL);
     assert(index >= 0 && index < bd->nElementos);
@@ -101,10 +101,10 @@ Team* getTeam(BDTeams* bd, int index) {
 
 
 
-// Função para adicionar um time ao banco de dados de times
+// Função para adicionar um team ao banco de dados de teams
 void adicionarTeam(BDTeams* bd, Team* t) {
     if (bd == NULL || t == NULL) {
-        printf("Erro: Banco de dados ou time é NULL. Não é possível adicionar o time.\n");
+        printf("Erro: Banco de dados ou team é NULL. Não é possível adicionar o team.\n");
         return;
     }
     TeamNode* novoNo = (TeamNode*)malloc(sizeof(TeamNode));
@@ -127,8 +127,8 @@ void adicionarTeam(BDTeams* bd, Team* t) {
     bd->nElementos++;
 }
 
-// Função para buscar um time pelo ID no banco de dados de times
-// É uma função auxiliar para facilitar a atualização dos dados dos times com base nas partidas
+// Função para buscar um team pelo ID no banco de dados de teams
+// É uma função auxiliar para facilitar a atualização dos dados dos teams com base nas partidas
 Team* buscarTeamPorId(BDTeams* bd, int id) {
     for (int i = 0; i < getSizeofBDTeams(bd); i++) {
         Team* t = getTeam(bd, i);
@@ -136,11 +136,11 @@ Team* buscarTeamPorId(BDTeams* bd, int id) {
             return t;
         }
     }
-    return NULL; // Retorna NULL se o time não for encontrado
+    return NULL; // Retorna NULL se o team não for encontrado
 }
 
-//Pega os Dados de uma partida e atualiza os dados dos times envolvidos na partida, como vitórias, empates, derrotas, gols marcados e gols sofridos
-// Função auxiliar de carregarDadosDePartidasEmTeams, que é a função principal para carregar os dados de todas as partidas e atualizar os dados dos times no banco de dados de times
+//Pega os Dados de uma partida e atualiza os dados dos teams envolvidos na partida, como vitórias, empates, derrotas, gols marcados e gols sofridos
+// Função auxiliar de carregarDadosDePartidasEmTeams, que é a função principal para carregar os dados de todas as partidas e atualizar os dados dos teams no banco de dados de teams
 void carregarDadosEmTeams(BDTeams* bd, Partida* p) {
     // Atualiza a tabela de classificação com base no resultado da partida
     int idTeam1 = getIdTeam1(p);
@@ -169,13 +169,13 @@ void carregarDadosEmTeams(BDTeams* bd, Partida* p) {
 
 }
 
-// Função para buscar times pelo nome ou prefixo no banco de dados de times
+// Função para buscar teams pelo nome ou prefixo no banco de dados de teams
 BDTeams* buscarPorTeamNoBD(BDTeams* bd, char* prefixo) {
     BDTeams* resultados = criarBDTeams(); // Cria um novo banco de dados para armazenar os resultados
     for (int i = 0; i < getSizeofBDTeams(bd); i++) {
         Team* t = getTeam(bd, i);
-        if (strncasecmp(getNome(t), prefixo, strlen(prefixo)) == 0) { // Verifica se o nome do time contém o prefixo fornecido
-            adicionarTeam(resultados, t); // Adiciona o time ao banco de dados de resultados
+        if (strncasecmp(getNome(t), prefixo, strlen(prefixo)) == 0) { // Verifica se o nome do team contém o prefixo fornecido
+            adicionarTeam(resultados, t); // Adiciona o team ao banco de dados de resultados
         }
     }
     return resultados;
@@ -191,10 +191,12 @@ void limparEstatisticasBDTeams(BDTeams* bd) {
     }
 }
 
-//função pra atualizar os dados dos times
+// Recalcula as estatísticas dos teams a partir da lista atual de partidas.
+// Primeiro zera os dados acumulados para evitar contagem duplicada quando
+// uma partida é inserida, removida ou atualizada.
 void atualizarDadosTeam(BDTeams* bdTeams, BDPartidas* bdPartidas) {
     if (bdTeams == NULL || bdPartidas == NULL) {
-        printf("Erro: Banco de dados de times ou partidas é NULL.\n");
+        printf("Erro: Banco de dados de teams ou partidas é NULL.\n");
         return;
     }
     //resetar dados do banco de dados para garantir que não haja dados repetidos
@@ -208,7 +210,7 @@ void atualizarDadosTeam(BDTeams* bdTeams, BDPartidas* bdPartidas) {
 
 
 
-// Função para liberar memória alocada para o banco de dados de times
+// Função para liberar memória alocada para o banco de dados de teams
 void liberarBDTeams(BDTeams* bd) {
     if (bd != NULL) {
         TeamNode* atual = bd->primeiro;
@@ -225,8 +227,8 @@ void liberarBDTeams(BDTeams* bd) {
 }
 
 
-// Função para liberar memória alocada para o banco de dados de times, sem liberar os times individuais
-// (útil para casos onde os times são compartilhados entre diferentes bancos de dados)
+// Função para liberar memória alocada para o banco de dados de teams, sem liberar os teams individuais
+// (útil para casos onde os teams são compartilhados entre diferentes bancos de dados)
 void liberarBDTeamsAux(BDTeams* bd) {
     if (bd != NULL) {
         TeamNode* atual = bd->primeiro;

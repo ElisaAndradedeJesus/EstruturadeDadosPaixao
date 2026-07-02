@@ -15,11 +15,13 @@ int main(){
 
     char nomeArquivoTeams[] = "BD/bd_times.csv";
     char nomeArquivoPartidas[] = "BD/bd_partidas.csv";
+
     BDTeams* bdTeams = criarBDTeamsDeArquivo(nomeArquivoTeams);
     BDPartidas* bdPartidas = criarBDPartidasDeArquivo(nomeArquivoPartidas);
-    Classificacao* classificacao = gerarClassificacao(bdTeams);
 
     carregarDadosDePartidasEmTeams(bdTeams, bdPartidas);
+
+    Classificacao* classificacao = gerarClassificacao(bdTeams);
 
     interfaceUser();
 
@@ -31,25 +33,32 @@ int main(){
         limparTela();
 
         if(opcao == '1'){
-            consultarTeamsEncontrados(bdTeams); // Busca o times
+            consultarTeamsEncontrados(bdTeams); // Busca o teams
 
         }else if(opcao == '2'){ 
             consultarPartida(bdPartidas, bdTeams); // Consulta as partidas no banco de dados de partidas
 
         }else if(opcao == '3'){
 
-            printf("A implementar...\n");
+            atualizandoPartida(bdPartidas, bdTeams);
+            atualizarDadosTeam(bdTeams, bdPartidas);
+            classificacao = atualizarClassificacao(classificacao, bdTeams);
 
         }else if(opcao == '4'){
 
-            printf("A implementar...\n");
+            removendoPartida(bdPartidas, bdTeams);
+            atualizarDadosTeam(bdTeams, bdPartidas);
+            classificacao = atualizarClassificacao(classificacao, bdTeams);
 
         }else if(opcao == '5'){
 
-            printf("A implementar...\n");
+            inserindoPartida(bdPartidas, bdTeams, classificacao);
+            atualizarDadosTeam(bdTeams, bdPartidas);
+            classificacao = atualizarClassificacao(classificacao, bdTeams);
 
         }else if(opcao == '6'){
-            imprimirTabelaClassificacao(classificacao);
+            printf("Tabela de Classificação:\n");
+            imprimirClassificacao(classificacao);
 
         }else{
 
@@ -66,10 +75,23 @@ int main(){
         interfaceUser();
         scanf(" %c", &opcao);
     }
+    
+    classificacao = atualizarClassificacao(classificacao, bdTeams);
+
+    if(salvarClassificacaoEmArquivo(classificacao, "BD/bd_classificacao.csv")){
+        printf("Classificação salva com sucesso em 'BD/bd_classificacao.csv'.\n");
+    }else{
+        printf("Erro ao salvar classificação em 'BD/bd_classificacao.csv'.\n");
+    }
+    if(salvarBDPartidasEmArquivo(bdPartidas, "BD/bd_partidas.csv")){
+        printf("Banco de dados de partidas salvo com sucesso em 'BD/bd_partidas.csv'.\n");
+    }else{
+        printf("Erro ao salvar banco de dados de partidas em 'BD/bd_partidas.csv'.\n");
+    }
 
     liberarBDTeams(bdTeams);
     liberarBDPartidas(bdPartidas);
-    salvarClassificacaoEmArquivo(classificacao, "BD/classificacao.csv");
     liberarClassificacao(classificacao);
+
     return 0;
 }

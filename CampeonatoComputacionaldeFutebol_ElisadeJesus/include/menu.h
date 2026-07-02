@@ -19,9 +19,6 @@ void interfaceUser();
 // Função para limpar a tela. Pra evitar que o menu fique poluído com as informações das consultas e atualizações
 void limparTela();
 
-// Função para imprimir a tabela de classificação dos teams
-void imprimirTabelaClassificacao(Classificacao* classificacao);
-
 // Função para imprimir as partidas encontradas, mostrando o nome dos teams e o resultado da partida
 void printarPartidasEncontradas(BDPartidas* bdPartidas, BDTeams* bdTeams);
 
@@ -33,5 +30,15 @@ void consultarTeamsEncontrados(BDTeams* bd);
 
 // Função para consultar partidas
 void consultarPartida(BDPartidas* bdPartidas, BDTeams* bdTeams);
+
+
+// Função para atualizar uma partida
+void atualizandoPartida(BDPartidas* bdPartidas, BDTeams* bdTeams);
+
+// Função para remover uma partida do Banco de Dados
+void removendoPartida(BDPartidas* bdPartidas, BDTeams* bdTeams);
+
+// Função que interage com o usuário para inserir uma partida no banco de dados
+void inserindoPartida(BDPartidas* bdPartidas, BDTeams* bdTeams, Classificacao* classificacao);
 
 #endif // MENU_H

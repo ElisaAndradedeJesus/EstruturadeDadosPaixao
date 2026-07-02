@@ -47,4 +47,9 @@ void liberarBDTeams(BDTeams* bd);
 // (útil para casos onde os teams são compartilhados entre diferentes bancos de dados)
 void liberarBDTeamsAux(BDTeams* bd);
 
+// Recalcula as estatísticas dos teams a partir da lista atual de partidas.
+// Primeiro zera os dados acumulados para evitar contagem duplicada quando
+// uma partida é inserida, removida ou atualizada.
+void atualizarDadosTeam(BDTeams* bdTeams, BDPartidas* bdPartidas);
+
 #endif // BDTEAMS_H

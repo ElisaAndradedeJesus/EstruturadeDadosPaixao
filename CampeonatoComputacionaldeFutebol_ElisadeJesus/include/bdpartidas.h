@@ -38,4 +38,28 @@ void liberarBDPartidas(BDPartidas* bd);
 // (útil para casos onde as partidas são compartilhadas entre diferentes bancos de dados)
 void liberarBDPartidasAux(BDPartidas* bd);
 
+// ===================================================================
+
+// id(identificador) da partida e não a posição dela no banco de dados.
+Partida* buscarPartidaPorId(BDPartidas* bd, int id);
+
+// Função para atualizar dados de uma partida
+int atualizarPartida(BDPartidas* bd, int id, int golsTeam1, int golsTeam2);
+
+// Função para remover uma partida do banco de dados
+int removerPartidaBD(BDPartidas* bd, int id);
+
+// Função para inserir uma partida no banco de dados
+int inserirPartidaBD(BDPartidas* bd, Partida* partida);
+
+int getIdUltimaPartida(BDPartidas* bd);
+
+// Função para inserir uma partida no banco de dados
+int inserirPartida(BDPartidas* bd, Partida* partida);
+
+// Função para salvar o banco de dados de partidas em um arquivo CSV
+int salvarBDPartidasEmArquivo(BDPartidas* bd, const char* nomeArquivo);
+
 #endif // BDPARTIDAS_H
+
+

@@ -51,7 +51,9 @@ Classificacao* criarClassificacao() {
     return classificacao;
 }
 
-// verifica se deve ocorrer troca de posições
+// Define os critérios de ordenação da classificação.
+// A ordem segue o enunciado: pontos ganhos, vitórias, saldo de gols,
+// gols marcados e, por fim, ID como critério estável de desempate.
 static int deveTrocar(Info a, Info b) {
     if (a.pontosGanhos != b.pontosGanhos) {
         return a.pontosGanhos < b.pontosGanhos;
@@ -72,7 +74,8 @@ static int deveTrocar(Info a, Info b) {
     return a.id > b.id;
 }
 
-// Ordena a classificação de forma decrescente (do com melhor classificação pro menos classificado)
+// Ordena a lista por bubble sort trocando apenas os dados dos nós.
+// Isso evita alterar os ponteiros da lista encadeada.
 void ordenarClassificacao(Classificacao* classificacao) {
     if (classificacao == NULL || classificacao->primeiro == NULL) {
         return;
@@ -135,8 +138,14 @@ Classificacao* gerarClassificacao(BDTeams* bdTeams) {
     return classificacao;
 }
 
-// Função para imprimir a tabela de classificação dos times
+// Função para imprimir a tabela de classificação dos teams
 void imprimirClassificacao(Classificacao* classificacao) {
+    if (classificacao == NULL) {
+        printf("Classificação não disponível.\n");
+        return;
+    }
+    printf("%-5s %-20s %-5s %-5s %-5s %-5s %-5s %-5s %-5s\n",
+       "ID", "Team", "V", "E", "D", "GM", "GS", "S", "PG");
 
     ClassificacaoNode* atual = classificacao->primeiro;
     while (atual != NULL) {

@@ -27,6 +27,11 @@ int getGolsTeam2(Partida* p);
 
 // ===================================================================
 
+// Função para alterar/definir o placar da partida
+void setPlacarPartida(Partida* p, int golsTeam1, int golsTeam2);
+
+// ===================================================================
+
 /// Função para liberar memória alocada para a partida
 void liberarPartida(Partida* p);
 
